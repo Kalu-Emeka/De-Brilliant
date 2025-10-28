@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Homework Portal – De‑Brilliant Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-green: #0a3d2e;
+      --gradient: linear-gradient(to right, #a8edc3, #e5fff1);
+      --glass-bg: rgba(255, 255, 255, 0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--gradient);
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark-green);
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 800px; margin: auto; }
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    h2 { margin-bottom: 1rem; font-size: 1.6rem; }
+    label { display: block; margin-bottom: 0.4rem; font-weight: 500; }
+    input, textarea { width: 100%; padding: 0.75rem 1rem; border: none; border-radius: 10px; font-size: 1rem; background: #ffffffcc; margin-bottom: 1rem; }
+    input:focus, textarea:focus { outline: none; box-shadow: 0 0 0 3px #b8f1c6; }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 30px;
+      background: var(--dark-green);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 0.5rem;
+    }
+    button:hover { background: #14664d; }
+    .msg { margin-top: 1rem; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Tutor Assignment Upload -->
+    <div class="card">
+      <h2>Tutor: Upload Assignment</h2>
+      <form id="assign-form">
+        <label for="tutor-id">Tutor ID</label>
+        <input type="text" id="tutor-id" placeholder="e.g. TUT123456" required>
+        <label for="assign-title">Assignment Title</label>
+        <input type="text" id="assign-title" required>
+        <label for="assign-desc">Description</label>
+        <textarea id="assign-desc" required></textarea>
+        <label for="assign-file">Upload File (optional)</label>
+        <input type="file" id="assign-file">
+        <button type="submit">Publish Assignment</button>
+        <div class="msg" id="assign-msg"></div>
+      </form>
+    </div>
+
+    <!-- Student Submission -->
+    <div class="card">
+      <h2>Student: Submit Homework</h2>
+      <form id="submit-form">
+        <label for="student-id">Student (Child) ID</label>
+        <input type="text" id="student-id" placeholder="e.g. CH123456" required>
+        <label for="assign-id">Assignment Title</label>
+        <input type="text" id="submit-assign-title" placeholder="Type exact title" required>
+        <label for="answer-text">Your Answer (or attach file)</label>
+        <textarea id="answer-text"></textarea>
+        <label for="answer-file">Upload File (optional)</label>
+        <input type="file" id="answer-file">
+        <button type="submit">Submit Homework</button>
+        <div class="msg" id="submit-msg"></div>
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    const ASSIGN_API = "https://sheetdb.io/api/v1/YOUR_ASSIGN_TABLE";
+    const SUBMIT_API = "https://sheetdb.io/api/v1/YOUR_SUBMIT_TABLE";
+
+    // Tutor publishes assignment
+    document.getElementById('assign-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg= document.getElementById('assign-msg');
+      msg.style.color="#333"; msg.textContent="Uploading assignment...";
+      const payload = {
+        data: {
+          tutor_id: document.getElementById('tutor-id').value.trim(),
+          title: document.getElementById('assign-title').value.trim(),
+          description: document.getElementById('assign-desc').value.trim(),
+          timestamp: new Date().toISOString()
+        }
+      };
+      try {
+        const resp = await fetch(ASSIGN_API, {
+          method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+        });
+        if (resp.ok) {
+          msg.style.color='green';
+          msg.textContent = "Assignment published!";
+          e.target.reset();
+        } else throw new Error("Upload failed");
+      } catch (err) {
+        msg.style.color='red';
+        msg.textContent = "Error: " + err.message;
+      }
+    });
+
+    // Student submits homework
+    document.getElementById('submit-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg= document.getElementById('submit-msg');
+      msg.style.color="#333"; msg.textContent="Submitting homework...";
+      const payload = {
+        data: {
+          student_id: document.getElementById('student-id').value.trim(),
+          title: document.getElementById('submit-assign-title').value.trim(),
+          answer_text: document.getElementById('answer-text').value.trim(),
+          timestamp: new Date().toISOString()
+        }
+      };
+      try {
+        const resp = await fetch(SUBMIT_API, {
+          method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+        });
+        if (resp.ok) {
+          msg.style.color='green';
+          msg.textContent = "Homework submitted!";
+          e.target.reset();
+        } else throw new Error("Submit failed");
+      } catch (err) {
+        msg.style.color='red';
+        msg.textContent = "Error: " + err.message;
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>De-Brilliant Academy Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f8ff;
+    margin: 0; padding: 20px;
+  }
+  .quiz-container {
+    max-width: 700px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  }
+  h1 {
+    text-align: center;
+    color: #006400;
+  }
+  #timer {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d22;
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  .question {
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  .options {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .options li {
+    margin-bottom: 10px;
+  }
+  input[type="radio"] {
+    margin-right: 10px;
+  }
+  button {
+    display: block;
+    width: 100%;
+    background: #006400;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #004d00;
+  }
+  #result {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #006400;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>De-Brilliant Academy Quiz</h1>
+  <div id="timer">Time Left: 30:00</div>
+  <form id="quizForm">
+    <div id="quizQuestions"></div>
+    <button type="submit">Submit Quiz</button>
+  </form>
+  <div id="result"></div>
+</div>
+
+<script>
+  const quizData = [
+    // Sample 30 questions - you can replace with actual ones
+    { question: "What does HTML stand for?", options: ["Hyperlinks and Text Markup Language", "Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinking Text Mark Language"], answer: "Hyper Text Markup Language" },
+    { question: "Which language is used for styling web pages?", options: ["HTML", "JQuery", "CSS", "XML"], answer: "CSS" },
+    { question: "Inside which HTML element do we put the JavaScript?", options: ["<js>", "<script>", "<javascript>", "<scripting>"], answer: "<script>" },
+    { question: "Which company developed JavaScript?", options: ["Microsoft", "Netscape", "Sun Microsystems", "IBM"], answer: "Netscape" },
+    { question: "What does CSS stand for?", options: ["Creative Style Sheets", "Colorful Style Sheets", "Cascading Style Sheets", "Computer Style Sheets"], answer: "Cascading Style Sheets" },
+    { question: "Which HTML attribute is used to define inline styles?", options: ["style", "styles", "class", "font"], answer: "style" },
+    { question: "Which property is used to change the background color in CSS?", options: ["background-color", "color", "bgcolor", "background"], answer: "background-color" },
+    { question: "How do you write 'Hello World' in an alert box in JavaScript?", options: ["alertBox('Hello World')", "msg('Hello World')", "alert('Hello World')", "msgBox('Hello World')"], answer: "alert('Hello World')" },
+    { question: "Which symbol is used for comments in JavaScript?", options: ["//", "/* */", "#", "<!-- -->"], answer: "//" },
+    { question: "Which HTML element is used to specify a footer for a document or section?", options: ["<bottom>", "<footer>", "<section>", "<foot>"], answer: "<footer>" },
+    { question: "What does API stand for?", options: ["Application Programming Interface", "Application Process Interface", "Advanced Programming Interface", "Application Programming Internet"], answer: "Application Programming Interface" },
+    { question: "Which HTML element is used to embed JavaScript?", options: ["<javascript>", "<script>", "<js>", "<code>"], answer: "<script>" },
+    { question: "Which CSS property controls the text size?", options: ["font-style", "text-size", "font-size", "text-style"], answer: "font-size" },
+    { question: "How do you create a function in JavaScript?", options: ["function:myFunction()", "function = myFunction()", "function myFunction()", "create function myFunction()"], answer: "function myFunction()" },
+    { question: "Which HTML attribute is used to define the title of an element?", options: ["title", "alt", "head", "name"], answer: "title" },
+    { question: "How do you insert a comment in a CSS file?", options: ["// this is a comment", "/* this is a comment */", "// this is a comment //", "<!-- this is a comment -->"], answer: "/* this is a comment */" },
+    { question: "Which property is used to change the font of an element in CSS?", options: ["font-weight", "font-family", "font-style", "text-style"], answer: "font-family" },
+    { question: "What is the correct syntax for referring to an external script called 'script.js'?", options: ["<script src='script.js'>", "<script href='script.js'>", "<script ref='script.js'>", "<script name='script.js'>"], answer: "<script src='script.js'>" },
+    { question: "Inside which HTML element do we place meta information?", options: ["<meta>", "<head>", "<title>", "<body>"], answer: "<head>" },
+    { question: "Which CSS property is used to change the text color of an element?", options: ["text-color", "color", "font-color", "font-style"], answer: "color" },
+    { question: "How do you declare a JavaScript variable?", options: ["v carName;", "variable carName;", "var carName;", "carName;"], answer: "var carName;" },
+    { question: "Which HTML element defines the title of a document?", options: ["<head>", "<title>", "<meta>", "<header>"], answer: "<title>" },
+    { question: "How do you add a background color for all <h1> elements in CSS?", options: ["h1 {background-color:#FFFFFF;}", "h1.all {background-color:#FFFFFF;}", "all.h1 {background-color:#FFFFFF;}", "h1 {bg-color:#FFFFFF;}"], answer: "h1 {background-color:#FFFFFF;}" },
+    { question: "How do you round the number 7.25 to the nearest integer in JavaScript?", options: ["Math.round(7.25)", "round(7.25)", "Math.rnd(7.25)", "rnd(7.25)"], answer: "Math.round(7.25)" },
+    { question: "Which method can be used to find the length of a string in JavaScript?", options: ["length()", "size()", "strlen()", "length"], answer: "length" },
+    { question: "Which HTML attribute specifies an alternate text for an image, if the image cannot be displayed?", options: ["alt", "title", "src", "longdesc"], answer: "alt" },
+    { question: "What does CSS stand for?", options: ["Computer Style Sheets", "Cascading Style Sheets", "Creative Style Sheets", "Colorful Style Sheets"], answer: "Cascading Style Sheets" },
+    { question: "Which is the correct CSS syntax?", options: ["body {color: black;}", "{body;color:black;}", "body:color=black;", "{body:color=black;}"], answer: "body {color: black;}" },
+    { question: "How do you select an element with id 'demo' in CSS?", options: [".demo", "#demo", "demo", "*demo"], answer: "#demo" },
+    { question: "How do you write a conditional statement in JavaScript?", options: ["if (i == 5)", "if i = 5 then", "if i == 5 then", "if i = 5"], answer: "if (i == 5)" }
+  ];
+
+  const quizQuestionsContainer = document.getElementById('quizQuestions');
+  const timerDisplay = document.getElementById('timer');
+  const quizForm = document.getElementById('quizForm');
+  const resultDiv = document.getElementById('result');
+
+  // Display questions dynamically
+  function loadQuiz() {
+    quizData.forEach((q, index) => {
+      const questionHTML = `
+        <div class="question-block">
+          <p class="question">${index + 1}. ${q.question}</p>
+          <ul class="options">
+            ${q.options.map((option, i) =>
+              `<li>
+                <label>
+                  <input type="radio" name="question${index}" value="${option}" required />
+                  ${option}
+                </label>
+              </li>`
+            ).join('')}
+          </ul>
+        </div>
+      `;
+      quizQuestionsContainer.insertAdjacentHTML('beforeend', questionHTML);
+    });
+  }
+
+  // Timer (30 minutes)
+  let timeLeft = 30 * 60; // in seconds
+
+  function startTimer() {
+    const interval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        submitQuiz();
+      } else {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        timeLeft--;
+      }
+    }, 1000);
+  }
+
+  // Submit quiz and calculate score
+  function submitQuiz() {
+    let score = 0;
+    for (let i = 0; i < quizData.length; i++) {
+      const selected = quizForm[`question${i}`];
+      if (selected) {
+        // If multiple radios with same name, it is a NodeList, get checked value:
+        let answerValue;
+        if (selected.length) {
+          for (const radio of selected) {
+            if (radio.checked) answerValue = radio.value;
+          }
+        } else {
+          if (selected.checked) answerValue = selected.value;
+        }
+        if (answerValue === quizData[i].answer) {
+          score++;
+        }
+      }
+    }
+
+    // Disable form after submission
+    for (const element of quizForm.elements) {
+      element.disabled = true;
+    }
+    quizForm.querySelector('button[type="submit"]').disabled = true;
+
+    resultDiv.textContent = `You scored ${score} out of ${quizData.length}.`;
+  }
+
+  quizForm.addEventListener('submit', e => {
+    e.preventDefault();
+    submitQuiz();
+  });
+
+  // Initialize
+  loadQuiz();
+  startTimer();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tutor Upload – De‑Brilliant Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-green: #0a3d2e;
+      --gradient: linear-gradient(to right, #a8edc3, #e5fff1);
+      --glass-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--gradient);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 1.5rem;
+      color: var(--dark-green);
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 520px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      background: #ffffffcc;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px #b8f1c6;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 30px;
+      background: var(--dark-green);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background: #14664d;
+    }
+
+    .msg {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .alt-login {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .alt-login a {
+      color: var(--dark-green);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .alt-login a:hover {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Upload Tutor Info</h2>
+    <form id="tutorForm">
+      <div class="form-group">
+        <label for="tutor-name">Full Name</label>
+        <input type="text" id="tutor-name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="tutor-subject">Subject</label>
+        <input type="text" id="tutor-subject" name="subject" required>
+      </div>
+      <div class="form-group">
+        <label for="tutor-location">Location</label>
+        <input type="text" id="tutor-location" name="location" required>
+      </div>
+      <div class="form-group">
+        <label for="tutor-contact">Contact Info</label>
+        <input type="text" id="tutor-contact" name="contact" required>
+      </div>
+      <button type="submit">Submit Tutor Info</button>
+      <div class="msg" id="response-msg"></div>
+    </form>
+
+    <div class="alt-login">
+      <p>Already Registered?</p>
+      <a href="tutor_login.html">Go to Login</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('tutorForm');
+    const msg = document.getElementById('response-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = form['name'].value.trim();
+      const subject = form['subject'].value.trim();
+      const location = form['location'].value.trim();
+      const contact = form['contact'].value.trim();
+
+      const tutorId = 'TUT' + Math.floor(100000 + Math.random() * 900000);
+      const timestamp = new Date().toLocaleString();
+
+      const data = {
+        data: {
+          name,
+          subject,
+          location,
+          contact,
+          tutorid: tutorId,
+          timestamp: timestamp
+        }
+      };
+
+      msg.style.color = "#333";
+      msg.textContent = "Checking if tutor already exists...";
+
+      try {
+        const checkRes = await fetch(`https://sheetdb.io/api/v1/xl5nbfz8gl8b1/search?name=${encodeURIComponent(name)}`);
+        const checkData = await checkRes.json();
+
+        if (checkData.length > 0) {
+          msg.style.color = "red";
+          msg.innerHTML = "Tutor already exists. <a href='tutor_login.html' style='color:#0a3d2e;'>Login here</a>";
+          return;
+        }
+
+        msg.textContent = "Uploading data...";
+
+        const uploadRes = await fetch('https://sheetdb.io/api/v1/xl5nbfz8gl8b1', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (uploadRes.ok) {
+          msg.style.color = "green";
+          msg.innerHTML = `Upload successful!<br>Your Tutor ID: <strong>${tutorId}</strong><br>Redirecting to login in <span id="countdown">5</span>s...`;
+
+          localStorage.setItem("tutor_id", tutorId);
+          localStorage.setItem("tutor_name", name);
+
+          let counter = 5;
+          const interval = setInterval(() => {
+            counter--;
+            document.getElementById('countdown').textContent = counter;
+            if (counter === 0) {
+              clearInterval(interval);
+              window.location.href = 'tutor_login.html';
+            }
+          }, 1000);
+        } else {
+          throw new Error("Upload failed");
+        }
+
+      } catch (error) {
+        msg.style.color = "red";
+        msg.textContent = "Error: " + error.message;
+        console.error("FULL ERROR:", error);
+      }
+    });
+  </script>
+</body>
+</html>

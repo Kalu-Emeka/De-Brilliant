@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | TutorConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         :root {
+            --primary: #10B981;
+            --primary-dark: #047857;
+            --primary-light: #6EE7B7;
+            --accent: #34D399;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --light: #F9FAFB;
+            --dark: #1F2937;
+            --gray: #6B7280;
+            --light-gray: #E5E7EB;
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --sidebar-width: 280px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-color: #1F2937;
+            --body-bg: linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%);
+            --section-bg: rgba(255, 255, 255, 0.8);
+            --footer-bg: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            --border-color: rgba(209, 213, 219, 0.5);
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --neumorphic: 8px 8px 16px rgba(166, 180, 174, 0.2), -8px -8px 16px rgba(255, 255, 255, 0.7);
+            --neumorphic-inset: inset 8px 8px 16px rgba(166, 180, 174, 0.2), inset -8px -8px 16px rgba(255, 255, 255, 0.7);
+        }
+        
+        .dark-mode {
+            --primary: #10B981;
+            --primary-dark: #047857;
+            --accent: #34D399;
+            --card-bg: rgba(31, 41, 55, 0.8);
+            --text-color: #F9FAFB;
+            --body-bg: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            --section-bg: rgba(31, 41, 55, 0.8);
+            --footer-bg: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            --border-color: rgba(55, 65, 81, 0.5);
+            --input-bg: rgba(31, 41, 55, 0.8);
+            --glass-bg: rgba(31, 41, 55, 0.3);
+            --glass-border: rgba(55, 65, 81, 0.5);
+            --neumorphic: 8px 8px 16px rgba(3, 7, 18, 0.5), -8px -8px 16px rgba(31, 41, 55, 0.6);
+            --neumorphic-inset: inset 8px 8px 16px rgba(3, 7, 18, 0.5), inset -8px -8px 16px rgba(55, 65, 81, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        body {
+            background: var(--body-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.8s ease, color 0.5s ease;
+        }
+        
+        .admin-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            min-height: 90vh;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+        /* Sidebar */
+        
+        .admin-sidebar {
+            width: 300px;
+            background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+        
+        .admin-logo i {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+        
+        .admin-logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .admin-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .admin-nav a i {
+            width: 25px;
+            font-size: 1.2rem;
+        }
+        
+        .admin-nav a:hover,
+        .admin-nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .admin-nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .admin-stats {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: auto;
+        }
+        
+        .admin-stats h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        /* Main Content */
+        
+        .admin-main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .admin-header h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .theme-toggle {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: var(--neumorphic-inset);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--card-bg);
+            padding: 8px 20px;
+            border-radius: 50px;
+            box-shadow: var(--neumorphic);
+            cursor: pointer;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        /* Dashboard Content */
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .dashboard-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--neumorphic);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+        /* Form Sections */
+        
+        .form-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--neumorphic);
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--input-bg);
+            color: var(--text-color);
+            box-shadow: var(--neumorphic-inset);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+        }
+        
+        .btn {
+            padding: 16px 30px;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.05rem;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: var(--neumorphic);
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        /* Notification */
+        
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 20px 25px;
+            border-radius: 15px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            animation: slideInRight 0.5s ease-out;
+            max-width: 400px;
+        }
+        
+        .notification.success {
+            background: #25D366;
+        }
+        
+        .notification.error {
+            background: #FF5252;
+        }
+        
+        .notification.fade-out {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        /* Debug Panel */
+        
+        .debug-panel {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--neumorphic);
+            margin-top: 40px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+        }
+        
+        .debug-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+        
+        .status-indicator.offline {
+            background: var(--danger);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            margin-top: 20px;
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        /* Animations */
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 992px) {
+            .admin-container {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .admin-sidebar {
+                width: 100%;
+                padding: 20px;
+            }
+            .admin-main {
+                padding: 30px;
+            }
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .header-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .form-section {
+                padding: 25px;
+            }
+            .dashboard-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>TutorConnect</h1>
+            </div>
+
+            <div class="admin-nav">
+                <a href="#" class="active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#">
+                    <i class="fas fa-video"></i> Live Classes
+                </a>
+                <!-- <a href="#">
+                    <i class="fas fa-chalkboard-teacher"></i> Tutor Management
+                </a>
+                <a href="#">
+                    <i class="fas fa-calendar-check"></i> Bookings
+                </a>
+                <a href="#">
+                    <i class="fas fa-users"></i> Students
+                </a>
+                <a href="#">
+                    <i class="fas fa-cog"></i> Settings
+                </a> -->
+            </div>
+
+            <div class="admin-stats">
+                <h3><i class="fas fa-chart-line"></i> System Stats</h3>
+                <div class="stat-item">
+                    <span>Active Tutors</span>
+                    <strong>3</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Live Sessions</span>
+                    <strong>2</strong>
+                </div>
+                <!-- <div class="stat-item">
+                    <span>New Bookings</span>
+                    <strong>27</strong>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <div class="admin-header">
+                <h2>Admin Dashboard</h2>
+                <div class="header-controls">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-avatar">AD</div>
+                        <span>Admin User</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="card-value">12</div>
+                    <div class="card-title">Total Students</div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="card-value">4</div>
+                    <div class="card-title">Active Tutors</div>
+                </div>
+
+                <!-- <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="card-value">324</div>
+                    <div class="card-title">Sessions Today</div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="card-value">$8,420</div>
+                    <div class="card-title">Revenue (7 days)</div>
+                </div> -->
+            </div>
+
+            <!-- Video Update Form -->
+            <div class="form-section">
+                <h3 class="section-title">Live Class Management</h3>
+
+                <form id="videoForm">
+                    <div class="form-group">
+                        <label for="youtubeLink">YouTube Video ID</label>
+                        <input type="text" id="youtubeLink" class="form-control" required placeholder="e.g., dQw4w9WgXcQ">
+                        <small>From URL: youtube.com/watch?v=<strong>VIDEO_ID</strong></small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i> Update Live Class
+                    </button>
+                </form>
+            </div>
+
+            <!-- Debug Panel -->
+            <div class="debug-panel">
+                <h3><i class="fas fa-bug"></i> System Status</h3>
+
+                <div class="connection-status">
+                    <div class="status-indicator"></div>
+                    <span id="connectionStatus">Realtime connection active</span>
+                    <span id="networkLatency">24ms</span>
+                </div>
+
+                <p>Last update: <span id="lastUpdateTime">Today, 14:32</span></p>
+
+                <button id="forceRefresh" class="btn btn-outline">
+                    <i class="fas fa-bolt"></i> Force Network Refresh
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlKnj9YWGheKPeA8MSUQxJWC-8xRVxTwo",
+            authDomain: "netcentric-94476.firebaseapp.com",
+            projectId: "netcentric-94476",
+            storageBucket: "netcentric-94476.appspot.com",
+            messagingSenderId: "203392644028",
+            appId: "1:203392644028:web:d028c79992b55e0ba631b9"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // DOM References
+        const themeToggle = document.getElementById('themeToggle');
+        const videoForm = document.getElementById('videoForm');
+        const forceRefresh = document.getElementById('forceRefresh');
+
+        // Dark mode toggle
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Validate YouTube ID format
+        function isValidYouTubeId(id) {
+            return /^[a-zA-Z0-9_-]{11}$/.test(id);
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <div>${message}</div>
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // Video update handler
+        videoForm.addEventListener('submit', async(e) => {
+            e.preventDefault();
+            const videoId = document.getElementById('youtubeLink').value.trim();
+
+            if (!videoId) {
+                showNotification('❌ Please enter a YouTube Video ID', 'error');
+                return;
+            }
+
+            if (!isValidYouTubeId(videoId)) {
+                showNotification('❌ Invalid YouTube ID format (must be 11 characters)', 'error');
+                return;
+            }
+
+            const submitBtn = videoForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+
+                await db.collection("config").doc("liveClass").set({
+                    videoId: videoId,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                showNotification('✅ Live class video updated successfully!', 'success');
+                console.log("Video updated to:", videoId);
+
+                // Update last update time
+                document.getElementById('lastUpdateTime').textContent = new Date().toLocaleTimeString();
+            } catch (error) {
+                console.error("Update error:", error);
+                showNotification(`❌ Failed to update: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+
+        // Force network refresh
+        forceRefresh.addEventListener('click', async() => {
+            const originalText = forceRefresh.innerHTML;
+
+            try {
+                forceRefresh.disabled = true;
+                forceRefresh.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+
+                // Simulate network refresh
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                showNotification('✅ Network connection refreshed successfully', 'success');
+            } catch (error) {
+                showNotification('❌ Network refresh failed', 'error');
+            } finally {
+                forceRefresh.disabled = false;
+                forceRefresh.innerHTML = originalText;
+            }
+        });
+
+        // Initialize animations
+        document.querySelectorAll('.dashboard-card').forEach((card, index) => {
+            card.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
+            card.style.opacity = 0;
+        });
+    </script>
+</body>
+
+</html>

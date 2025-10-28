@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tutor Login – De‑Brilliant Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-green: #0a3d2e;
+      --gradient: linear-gradient(to right, #a8edc3, #e5fff1);
+      --glass-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--gradient);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 1.5rem;
+      color: var(--dark-green);
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+      color: var(--dark-green);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      background: #ffffffcc;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px #b8f1c6;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 30px;
+      background: var(--dark-green);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background: #14664d;
+    }
+
+    .msg {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Tutor Login</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="tutor-name">Full Name</label>
+        <input type="text" id="tutor-name" required />
+      </div>
+      <div class="form-group">
+        <label for="tutor-id">Tutor ID</label>
+        <input type="text" id="tutor-id" required />
+      </div>
+      <button type="submit">Login</button>
+      <div class="msg" id="login-msg"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const msg = document.getElementById('login-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('tutor-name').value.trim().toLowerCase();
+      const tutorId = document.getElementById('tutor-id').value.trim().toUpperCase();
+
+      if (!name || !tutorId) {
+        msg.style.color = "red";
+        msg.textContent = "Please fill in both fields.";
+        return;
+      }
+
+      msg.style.color = "#333";
+      msg.textContent = "Checking credentials...";
+
+      try {
+        const res = await fetch(`https://sheetdb.io/api/v1/xl5nbfz8gl8b1/search?name=${encodeURIComponent(name)}&tutorid=${encodeURIComponent(tutorId)}`);
+        const data = await res.json();
+
+        if (data.length > 0) {
+          msg.style.color = "green";
+          msg.textContent = "Login successful! Redirecting...";
+
+          localStorage.setItem("tutor_id", tutorId);
+          localStorage.setItem("tutor_name", name);
+
+          setTimeout(() => {
+            window.location.href = "upload_report.html";
+          }, 2000);
+        } else {
+          msg.style.color = "red";
+          msg.textContent = "Tutor not found. Please check your name and ID.";
+        }
+      } catch (err) {
+        console.error(err);
+        msg.style.color = "red";
+        msg.textContent = "Login failed. Please try again.";
+      }
+    });
+  </script>
+</body>
+</html>

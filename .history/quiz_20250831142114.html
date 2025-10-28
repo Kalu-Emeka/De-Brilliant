@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brilliant House Academy Quiz</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f6f9; }
+    header { background: #2c3e50; color: white; padding: 1rem; text-align: center; }
+    main { padding: 2rem; max-width: 900px; margin: auto; }
+    .btn { padding: 0.75rem 1.5rem; margin: 1rem 0; background: #2980b9; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    .btn:hover { background: #1f6391; }
+    .section { display: none; margin-top: 2rem; }
+    .card { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+    .quiz-option { display: block; padding: 0.75rem; background: #ecf0f1; border-radius: 6px; margin: 0.5rem 0; cursor: pointer; }
+    .quiz-option:hover { background: #d0d7de; }
+    #timer { font-weight: bold; color: #e74c3c; margin: 1rem 0; }
+    canvas { margin-top: 2rem; }
+    .how-it-works { background: #ffffff; border-left: 6px solid #2980b9; padding: 1.5rem; border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.05); }
+    .how-it-works h2 { margin-top: 0; color: #2c3e50; }
+    .how-it-works ul { padding-left: 1.2rem; }
+    .how-it-works li { margin-bottom: 0.6rem; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Brilliant House Academy – Quiz App</h1>
+  </header>
+  <main>
+    <section id="landing" class="section" style="display:block;">
+      <button class="btn" onclick="showSection('howWorks')">How it Works</button>
+      <button class="btn" onclick="showSection('quizSelect')">Take a Quiz</button>
+    </section>
+
+    <section id="howWorks" class="section">
+      <div class="how-it-works">
+        <h2>How It Works</h2>
+        <ul>
+          <li>Select from one of the available quizzes: Python, Web Development, UI/UX, Fundamentals of Programming, or Databases.</li>
+          <li>Each quiz has 30 questions and must be completed within 30 minutes.</li>
+          <li>Answer the questions by selecting the correct option. You can navigate back and forth between questions.</li>
+          <li>Your progress will be tracked with a timer at the top of the page.</li>
+          <li>Once you submit or the time runs out, your score will be displayed with a clear statistical chart.</li>
+        </ul>
+      </div>
+      <button class="btn" onclick="showSection('landing')">Back</button>
+    </section>
+
+    <section id="quizSelect" class="section">
+      <div class="card">
+        <h2>Select a Quiz</h2>
+        <div class="quiz-option" onclick="startQuiz('python')">Python Quiz</div>
+        <div class="quiz-option" onclick="startQuiz('web')">Web Development Quiz</div>
+        <div class="quiz-option" onclick="startQuiz('uiux')">UI/UX Quiz</div>
+        <div class="quiz-option" onclick="startQuiz('fundamentals')">Fundamentals of Programming</div>
+        <div class="quiz-option" onclick="startQuiz('databases')">Databases/SQL Quiz</div>
+      </div>
+      <button class="btn" onclick="showSection('landing')">Back</button>
+    </section>
+
+    <section id="quiz" class="section">
+      <div class="card">
+        <h2 id="quizTitle"></h2>
+        <div id="timer"></div>
+        <div id="questionContainer"></div>
+        <button class="btn" onclick="prevQuestion()">Previous</button>
+        <button class="btn" onclick="nextQuestion()">Next</button>
+        <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+      </div>
+    </section>
+
+    <section id="results" class="section">
+      <div class="card">
+        <h2>Your Results</h2>
+        <p id="scoreText"></p>
+        <canvas id="scoreChart"></canvas>
+        <button class="btn" onclick="showSection('landing')">Back to Home</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const BANK = {
+      python: [
+        {q: "What is Python?", options:["Snake","Programming Language","Car"], answer:1},
+      ],
+      web: [
+        {q: "HTML stands for?", options:["HyperText Markup Language","HighText Machine Language","Home Tool Markup Language"], answer:0},
+      ],
+      uiux: [
+        {q: "UI stands for?", options:["User Input","User Interface","Universal Icon"], answer:1},
+      ],
+      fundamentals: [
+        {q: "Which is a programming language?", options:["Python","HTML","CSS"], answer:0},
+      ],
+      databases: [
+        {q: "What does SQL stand for?", options:["Structured Query Language","Strong Question Line","Simple Query Logic"], answer:0},
+      ]
+    };
+
+    let currentQuiz = [], quizCategory="", currentIndex=0, score=0, timer;
+    const QUIZ_TIME = 30*60; // 30 minutes
+
+    function showSection(id){
+      document.querySelectorAll('.section').forEach(s => s.style.display="none");
+      document.getElementById(id).style.display="block";
+    }
+
+    function startQuiz(category){
+      quizCategory = category;
+      currentQuiz = BANK[category];
+      currentIndex = 0; score=0;
+      document.getElementById('quizTitle').innerText = category.toUpperCase() + " Quiz";
+      showSection('quiz');
+      showQuestion();
+      startTimer();
+    }
+
+    function showQuestion(){
+      const qObj = currentQuiz[currentIndex];
+      let html = `<h3>${currentIndex+1}. ${qObj.q}</h3>`;
+      qObj.options.forEach((opt,i)=>{
+        html += `<div><input type='radio' name='q${currentIndex}' value='${i}'> ${opt}</div>`;
+      });
+      document.getElementById('questionContainer').innerHTML = html;
+    }
+
+    function nextQuestion(){
+      if(currentIndex < currentQuiz.length-1){
+        currentIndex++;
+        showQuestion();
+      }
+    }
+    function prevQuestion(){
+      if(currentIndex > 0){
+        currentIndex--;
+        showQuestion();
+      }
+    }
+
+    function submitQuiz(){
+      score = 0;
+      currentQuiz.forEach((q,idx)=>{
+        const selected = document.querySelector(`input[name='q${idx}']:checked`);
+        if(selected && parseInt(selected.value)===q.answer) score++;
+      });
+      showResults();
+    }
+
+    function showResults(){
+      clearInterval(timer);
+      document.getElementById('scoreText').innerText = `You scored ${score} out of ${currentQuiz.length}`;
+      showSection('results');
+
+      new Chart(document.getElementById('scoreChart'),{
+        type:'doughnut',
+        data:{
+          labels:['Correct','Incorrect'],
+          datasets:[{data:[score,currentQuiz.length-score]}]
+        }
+      });
+    }
+
+    function startTimer(){
+      let time=QUIZ_TIME;
+      const timerDiv=document.getElementById('timer');
+      timer=setInterval(()=>{
+        const mins=Math.floor(time/60), secs=time%60;
+        timerDiv.innerText=`Time Left: ${mins}:${secs<10?'0'+secs:secs}`;
+        if(time-- <=0){ clearInterval(timer); submitQuiz(); }
+      },1000);
+    }
+  </script>
+</body>
+</html>

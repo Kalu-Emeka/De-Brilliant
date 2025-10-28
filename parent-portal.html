@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parent Portal – De‑Brilliant Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --dark-green: #0a3d2e;
+      --light-green: #c7f5d9;
+      --gradient: linear-gradient(to right, #a8edc3, #e5fff1);
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--gradient);
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--dark-green);
+    }
+
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 720px;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      background: #ffffffdd;
+      color: #333;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px #a8edc355;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 30px;
+      background: var(--dark-green);
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #126c4d;
+    }
+
+    .msg {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .report {
+      margin-top: 1.5rem;
+      padding: 1.2rem;
+      border-radius: 12px;
+      background: #ffffffdd;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      color: #333;
+    }
+
+    .report h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      color: #0a3d2e;
+    }
+
+    .report p {
+      margin: 0.3rem 0;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 500px) {
+      .card {
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Parent Portal</h2>
+    <input type="text" id="childIdInput" placeholder="Enter your Child ID" required>
+    <button onclick="fetchReports()">View Reports</button>
+    <div class="msg" id="statusMsg"></div>
+  </div>
+
+  <div class="card" id="reportContainer" style="display: none;">
+    <h2>Report(s)</h2>
+    <div id="reportsList"></div>
+  </div>
+
+  <script>
+    const REPORT_API = "https://sheetdb.io/api/v1/5b3i6uoqs39gt/search?child_id=";
+
+    async function fetchReports() {
+      const childId = document.getElementById("childIdInput").value.trim();
+      const statusMsg = document.getElementById("statusMsg");
+      const reportContainer = document.getElementById("reportContainer");
+      const reportsList = document.getElementById("reportsList");
+
+      if (!childId) {
+        statusMsg.style.color = "red";
+        statusMsg.textContent = "Please enter a valid Child ID.";
+        return;
+      }
+
+      statusMsg.style.color = "#0a3d2e";
+      statusMsg.textContent = "Fetching reports...";
+      reportContainer.style.display = "none";
+      reportsList.innerHTML = "";
+
+      try {
+        const response = await fetch(REPORT_API + encodeURIComponent(childId));
+        const data = await response.json();
+
+        if (data.length === 0) {
+          statusMsg.style.color = "#e67e22";
+          statusMsg.textContent = "No reports found for this Child ID.";
+          return;
+        }
+
+        statusMsg.textContent = "";
+        reportContainer.style.display = "block";
+
+        data.forEach(report => {
+          const reportDiv = document.createElement("div");
+          reportDiv.className = "report";
+          reportDiv.innerHTML = `
+            <h3>Subject: ${report.subject}</h3>
+            <p><strong>Report:</strong> ${report.report}</p>
+            <p><strong>Tutor:</strong> ${report.tutor_name} (${report.tutor_id})</p>
+            <p><strong>Date:</strong> ${report.timestamp || 'N/A'}</p>
+          `;
+          reportsList.appendChild(reportDiv);
+        });
+
+      } catch (err) {
+        console.error(err);
+        statusMsg.style.color = "red";
+        statusMsg.textContent = "Something went wrong. Please try again.";
+      }
+    }
+  </script>
+</body>
+</html>

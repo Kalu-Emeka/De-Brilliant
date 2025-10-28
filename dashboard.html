@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>De-Brilliant House Academy Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="shortcut icon" href="./assets/De-briliant-logo.png">
+    <style>
+         :root {
+            --primary: #0a3d2e;
+            /* dark green */
+            --secondary: #57e09d;
+            /* light green */
+            --bg-gradient: linear-gradient(135deg, #d5f8e6, #f0fff5);
+            /* light green background */
+            --card-bg: #fff;
+            --muted: #6b7280;
+            --shadow: 0 4px 24px rgba(10, 61, 46, 0.12);
+            --radius: 1.2rem;
+            --transition: 0.3s cubic-bezier(.4, 0, .2, 1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: var(--primary);
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .school-logo {
+            height: 40px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            user-select: none;
+        }
+        
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            transition: max-height 0.3s ease;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            transition: background 0.3s ease;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            background: var(--secondary);
+            color: #0a3d2e;
+        }
+        
+        .logout-btn {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background var(--transition);
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            width: 30px;
+            height: 24px;
+            cursor: pointer;
+        }
+        
+        .hamburger div {
+            background: #fff;
+            height: 3px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active div:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active div:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .welcome-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .welcome-card h2 {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .welcome-card p {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+        
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .module-card {
+            background: linear-gradient(135deg, #ffffff, #e3fbe8);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 128, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 179, 134, 0.25);
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .module-card h3 {
+            margin: 0.5rem 0;
+            color: var(--primary);
+        }
+        
+        .module-card p {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+        
+        .module-btn {
+            background: var(--secondary);
+            color: #0a3d2e;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s ease;
+        }
+        
+        .module-btn:hover {
+            background: #98f5cc;
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            nav {
+                flex-direction: column;
+                width: 100%;
+                max-height: 0;
+                overflow: hidden;
+                background: var(--primary);
+                border-radius: 0 0 var(--radius) var(--radius);
+            }
+            nav.open {
+                max-height: 300px;
+            }
+            nav a {
+                padding: 1rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .logout-btn {
+                width: 100%;
+                justify-content: center;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="brand">
+            <img src="brillo.jpg" alt="School Logo" class="school-logo" /> De-Brilliant House Academy
+        </div>
+
+        <div class="hamburger" id="hamburger" aria-label="Toggle menu" tabindex="0" role="button">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <nav id="navMenu">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="reports.html">Reports</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="homework.html">Homework</a>
+            <a href="/tutor.html">Find a tutor</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">
+      <i class="fa-solid fa-sign-out-alt"></i> Logout
+    </button>
+    </header>
+
+    <main>
+        <section class="welcome-card">
+            <h2>Welcome, <span id="user-name">Parent</span>!</h2>
+            <p>Manage your child's learning, view progress, take quizzes, and submit homework all in one place.</p>
+        </section>
+
+        <section class="modules">
+            <article class="module-card" onclick="window.location.href='parent-portal.html'">
+                <div class="module-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h3>Parent Communication Portal</h3>
+                <p>View weekly reports, messages, and give feedback to tutors.</p>
+                <button class="module-btn" onclick="event.stopPropagation(); window.open('https://wa.me/?text=Hello%20Tutor%2C%20I%20have%20feedback%20regarding%20my%20child.', '_blank');">
+          <i class="fa-brands fa-whatsapp"></i> Give Feedback
+        </button>
+            </article>
+
+            <article class="module-card" onclick="window.location.href='tutorupload.html'">
+                <div class="module-icon"><i class="fa-solid fa-upload"></i></div>
+                <h3>Tutor Upload Portal</h3>
+                <p>Upload weekly performance reports or general messages for parents.</p>
+                <button class="module-btn" onclick="event.stopPropagation(); window.location.href='tutorupload.html';">
+          <i class="fa-solid fa-paper-plane"></i> Upload
+        </button>
+            </article>
+
+            <article class="module-card" onclick="window.location.href='quizzes.html'">
+                <div class="module-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+                <h3>Online Quiz & Assessment</h3>
+                <p>Take interactive quizzes and view instant results.</p>
+                <button class="module-btn" onclick="event.stopPropagation(); window.location.href='quizzes.html';">
+          <i class="fa-solid fa-play"></i> Start Quiz
+        </button>
+            </article>
+
+            <article class="module-card" onclick="window.location.href='homework.html'">
+                <div class="module-icon"><i class="fa-solid fa-book-open"></i></div>
+                <h3>Homework Submission Portal</h3>
+                <p>View assignments, upload homework, and receive tutor feedback.</p>
+                <button class="module-btn" onclick="event.stopPropagation(); window.location.href='homework.html';">
+          <i class="fa-solid fa-upload"></i> Submit Homework
+        </button>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Get the stored username or default to "User"
+            const storedName = localStorage.getItem("userName") || "User";
+
+            // Display the username in the dashboard
+            document.getElementById("user-name").textContent = storedName;
+
+            // Hamburger menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('open');
+            });
+
+            hamburger.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    hamburger.click();
+                }
+            });
+
+            // Logout button logic
+            document.getElementById("logoutBtn").addEventListener("click", () => {
+                if (confirm("Are you sure you want to logout?")) {
+                    localStorage.removeItem("userName");
+                    alert("Logged out successfully.");
+                    window.location.href = "/login.html"; // Redirect to login page
+                }
+            });
+        });
+    </script>

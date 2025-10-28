@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Report – De‑Brilliant Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-green: #0a3d2e;
+      --gradient: linear-gradient(to right, #a8edc3, #e5fff1);
+      --glass-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--gradient);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 1.5rem;
+      color: var(--dark-green);
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      background: #ffffffcc;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px #b8f1c6;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 30px;
+      background: var(--dark-green);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background: #14664d;
+    }
+
+    .msg {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Upload Report</h2>
+    <form id="reportForm">
+      <div class="form-group">
+        <label for="child-name">Child's Name</label>
+        <input type="text" id="child-name" required>
+      </div>
+      <div class="form-group">
+        <label for="child-age">Age</label>
+        <input type="number" id="child-age" required>
+      </div>
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" required>
+      </div>
+      <div class="form-group">
+        <label for="report">Report</label>
+        <textarea id="report" required></textarea>
+      </div>
+      <button type="submit">Submit Report</button>
+      <div class="msg" id="response-msg"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('reportForm');
+    const msg = document.getElementById('response-msg');
+
+    const SHEET_API = "https://sheetdb.io/api/v1/5b3i6uoqs39gt";
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.style.color = "#333";
+      msg.textContent = "Submitting...";
+
+      const childName = document.getElementById('child-name').value.trim();
+      const childAge = document.getElementById('child-age').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const report = document.getElementById('report').value.trim();
+      const tutorName = localStorage.getItem("tutor_name") || "Unknown";
+      const tutorId = localStorage.getItem("tutor_id") || "TUT000000";
+
+      if (!childName || !childAge || !subject || !report) {
+        msg.style.color = "red";
+        msg.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      try {
+        // Check if child already exists
+        const checkRes = await fetch(`${SHEET_API}/search?child_name=${encodeURIComponent(childName)}`);
+        const checkData = await checkRes.json();
+
+        let childId;
+
+        if (checkData.length > 0) {
+          childId = checkData[0].child_id;
+        } else {
+          // Generate a new child ID if not found
+          childId = "CH" + Math.floor(100000 + Math.random() * 900000);
+        }
+
+        // Upload data
+        const uploadRes = await fetch(SHEET_API, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            data: {
+              child_id: childId,
+              child_name: childName,
+              age: childAge,
+              subject,
+              report,
+              tutor_name: tutorName,
+              tutor_id: tutorId
+            }
+          })
+        });
+
+        if (uploadRes.ok) {
+          msg.style.color = "green";
+          msg.innerHTML = `Report uploaded successfully.<br><strong>Child ID:</strong> ${childId}<br>Share this ID with the parent.`;
+          form.reset();
+        } else {
+          throw new Error("Upload failed.");
+        }
+      } catch (err) {
+        console.error(err);
+        msg.style.color = "red";
+        msg.textContent = "Something went wrong. Please try again.";
+      }
+    });
+  </script>
+</body>
+</html>

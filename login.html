@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In – De‑Brilliant House Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <link rel="shortcut icon" href="./assets/debrilliant logo2.jpg">
+
+  <style>
+    :root {
+      --dark-green: #0a3d2e;
+      --light-green: #c7f5d9;
+      --gradient: linear-gradient(to right, #a8edc3, #e5fff1);
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--gradient);
+      color: var(--dark-green);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      text-align: center;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      margin-bottom: 1.5rem;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group {
+      margin-bottom: 1.4rem;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+      color: var(--dark-green);
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: none;
+      font-size: 1rem;
+      background: #ffffffdd;
+      color: #333;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px #a8edc355;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--dark-green);
+      color: var(--white);
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #116b52;
+    }
+
+    #auth-message {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      min-height: 20px;
+    }
+
+    .links {
+      margin-top: 1.8rem;
+      font-size: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .links a {
+      color: var(--dark-green);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .links a:hover {
+      color: #0a6b4a;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 2rem 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="brillo.jpg" alt="School Logo" class="logo" />
+    <h2>Sign In</h2>
+    <p>Welcome back! Please sign in to access the full features.</p>
+
+    <div class="input-group">
+      <label for="signin-email">Email</label>
+      <input type="email" id="signin-email" placeholder="Enter your email" required>
+    </div>
+
+    <div class="input-group">
+      <label for="signin-password">Password</label>
+      <input type="password" id="signin-password" placeholder="Enter your password" required>
+    </div>
+
+    <button id="signin-btn" class="btn">Sign In</button>
+
+    <div class="links">
+      <a id="forgot-password">Forgot Password?</a>
+      <span>Don’t have an account? <a href="signup.html">Create one</a></span>
+    </div>
+
+    <p id="auth-message"></p>
+  </div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBl10iIOsFLEPGBLjiM4nIeTuORCp8blhg",
+    authDomain: "debrilliant-academy.firebaseapp.com",
+    projectId: "debrilliant-academy",
+    storageBucket: "debrilliant-academy.firebasestorage.app",
+    messagingSenderId: "370700525079",
+    appId: "1:370700525079:web:c827e83f3452797e4e8652",
+    measurementId: "G-X487BF0Q8Z"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const emailInput = document.getElementById('signin-email');
+  const passwordInput = document.getElementById('signin-password');
+  const signinBtn = document.getElementById('signin-btn');
+  const authMessage = document.getElementById('auth-message');
+  const forgotPasswordLink = document.getElementById('forgot-password');
+
+  signinBtn.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if (!email || !password) {
+      authMessage.textContent = "Please fill out both fields.";
+      authMessage.style.color = "#e67e22";
+      return;
+    }
+
+    authMessage.textContent = "Signing in...";
+    authMessage.style.color = "#333";
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;  // <-- FIX: get user object here
+
+      if (!user.emailVerified) {
+        authMessage.textContent = "Please verify your email before signing in.";
+        authMessage.style.color = "#f39c12";
+        return;
+      }
+
+      // Extract first name from email (remove digits and split on '.' or '_')
+      const emailFromUser = user.email;
+      const firstName = emailFromUser.split('@')[0].replace(/[0-9]/g, '').split(/[._]/)[0];
+      const displayName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+
+      // Save displayName to localStorage for dashboard use
+      localStorage.setItem("userName", displayName);
+
+      window.location.href = "/dashboard.html";
+    } catch (error) {
+      // Customize error messages for invalid credentials
+      if (
+        error.code === 'auth/invalid-credential' ||
+        error.code === 'auth/wrong-password' ||
+        error.code === 'auth/user-not-found'
+      ) {
+        authMessage.textContent = "Invalid credentials";
+      } else {
+        authMessage.textContent = error.message;
+      }
+      authMessage.style.color = "#e74c3c";
+    }
+  });
+
+  forgotPasswordLink.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+
+    if (!email) {
+      authMessage.textContent = "Enter your email address to reset your password.";
+      authMessage.style.color = "#e67e22";
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      authMessage.textContent = "Password reset email sent. Check your inbox.";
+      authMessage.style.color = "#27ae60";
+    } catch (error) {
+      authMessage.textContent = error.message;
+      authMessage.style.color = "#e74c3c";
+    }
+  });
+</script>

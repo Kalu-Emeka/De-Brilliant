@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Online Quiz – De‑Brilliant Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-green: #0a3d2e;
+      --gradient: linear-gradient(to right, #a8edc3, #e5fff1);
+      --glass-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--gradient);
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark-green);
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 640px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    #timer {
+      font-weight: 600;
+      text-align: right;
+      margin-bottom: 1rem;
+    }
+
+    .question {
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .options {
+      list-style: none;
+      padding: 0;
+    }
+
+    .options li {
+      margin-bottom: 0.6rem;
+    }
+
+    label {
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 30px;
+      background: var(--dark-green);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 1.5rem;
+    }
+
+    button:hover {
+      background: #14664d;
+    }
+
+    #result {
+      margin-top: 1.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+    }
+
+    .correct {
+      background: #d8f5e3;
+      color: #0a3d2e;
+    }
+
+    .incorrect {
+      background: #ffe5e5;
+      color: #a94442;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Online Quiz</h1>
+    <div id="timer">Time Left: <span id="time">60</span> seconds</div>
+    <div id="quiz-container"></div>
+    <button id="next-btn" style="display:none;">Next</button>
+    <button id="submit-btn" style="display:none;">Submit Quiz</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const QUIZ_API = "https://sheetdb.io/api/v1/wmpfy9gyhikyl";
+    const quizContainer = document.getElementById('quiz-container');
+    const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const resultDiv = document.getElementById('result');
+    const timerSpan = document.getElementById('time');
+
+    let questions = [];
+    let currentQuestion = 0;
+    let selectedAnswers = [];
+    let timeLeft = 60;
+    let timer;
+
+    async function fetchQuestions() {
+      try {
+        const res = await fetch(QUIZ_API);
+        questions = await res.json();
+        showQuestion();
+        startTimer();
+      } catch (err) {
+        quizContainer.innerHTML = "<p style='color:red;'>Failed to load questions. Try refreshing.</p>";
+      }
+    }
+
+    function showQuestion() {
+      quizContainer.innerHTML = "";
+      resultDiv.innerHTML = "";
+
+      const q = questions[currentQuestion];
+      if (!q) return;
+
+      const qDiv = document.createElement('div');
+      qDiv.classList.add('question-block');
+      qDiv.innerHTML = `
+        <div class="question">${currentQuestion + 1}. ${q.question}</div>
+        <ul class="options">
+          <li><label><input type="radio" name="option" value="A"> ${q.option_a}</label></li>
+          <li><label><input type="radio" name="option" value="B"> ${q.option_b}</label></li>
+          <li><label><input type="radio" name="option" value="C"> ${q.option_c}</label></li>
+          <li><label><input type="radio" name="option" value="D"> ${q.option_d}</label></li>
+        </ul>
+      `;
+      quizContainer.appendChild(qDiv);
+
+      nextBtn.style.display = currentQuestion < questions.length - 1 ? "block" : "none";
+      submitBtn.style.display = currentQuestion === questions.length - 1 ? "block" : "none";
+    }
+
+    function startTimer() {
+      timerSpan.textContent = timeLeft;
+      timer = setInterval(() => {
+        timeLeft--;
+        timerSpan.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+
+    nextBtn.addEventListener('click', () => {
+      saveAnswer();
+      currentQuestion++;
+      showQuestion();
+    });
+
+    submitBtn.addEventListener('click', () => {
+      saveAnswer();
+      submitQuiz();
+    });
+
+    function saveAnswer() {
+      const selected = document.querySelector('input[name="option"]:checked');
+      selectedAnswers[currentQuestion] = selected ? selected.value : null;
+    }
+
+    function submitQuiz() {
+      clearInterval(timer);
+      let score = 0;
+
+      questions.forEach((q, index) => {
+        if (selectedAnswers[index] && selectedAnswers[index].toUpperCase() === q.correct.toUpperCase()) {
+          score++;
+        }
+      });
+
+      quizContainer.innerHTML = "";
+      nextBtn.style.display = "none";
+      submitBtn.style.display = "none";
+
+      resultDiv.innerHTML = `
+        You scored ${score} out of ${questions.length} 
+        (${Math.round((score / questions.length) * 100)}%)
+      `;
+
+      questions.forEach((q, index) => {
+        const selected = selectedAnswers[index];
+        const isCorrect = selected && selected.toUpperCase() === q.correct.toUpperCase();
+        const feedback = document.createElement('div');
+        feedback.className = `feedback ${isCorrect ? "correct" : "incorrect"}`;
+        feedback.innerHTML = `
+          ${index + 1}. ${q.question}<br>
+          Your Answer: <strong>${selected || "None"}</strong> | Correct Answer: <strong>${q.correct}</strong>
+        `;
+        quizContainer.appendChild(feedback);
+      });
+    }
+
+    fetchQuestions();
+  </script>
+</body>
+</html>
