@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel | TutorConnect</title>
+    <title>De-Brilliant TutorConnect | Modern Tutoring Platform</title>
+    <link rel="shortcut icon" href="./assets/De-briliant-logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
          :root {
             --primary: #10B981;
@@ -56,143 +58,104 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Open Sans', sans-serif;
         }
         
         body {
+            font-family: 'Open Sans', sans-serif;
             background: var(--body-bg);
             color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            padding-top: 80px;
             transition: background 0.8s ease, color 0.5s ease;
         }
         
-        .admin-container {
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .container {
             width: 100%;
             max-width: 1200px;
-            display: flex;
-            min-height: 90vh;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
-        .admin-sidebar {
-            width: 300px;
-            background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 100%);
+        .viewer-count-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition);
-        }
-        
-        .admin-logo {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            padding: 0 10px;
+            gap: 8px;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .admin-logo i {
-            font-size: 2.5rem;
+        .viewer-count-badge i {
             color: var(--accent);
         }
         
-        .admin-logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-        
-        .admin-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .admin-nav a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            padding: 15px 20px;
-            border-radius: 15px;
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 80px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            padding: 0 30px;
             transition: var(--transition);
-            font-weight: 500;
+            border-bottom: 1px solid var(--glass-border);
         }
         
-        .admin-nav a i {
-            width: 25px;
-            font-size: 1.2rem;
-        }
-        
-        .admin-nav a:hover,
-        .admin-nav a.active {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .admin-nav a.active {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .admin-stats {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: auto;
-        }
-        
-        .admin-stats h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .stat-item:last-child {
-            border-bottom: none;
-        }
-        
-        .admin-main {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-        }
-        
-        .admin-header {
+        .mobile-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
+            width: 100%;
         }
         
-        .admin-header h2 {
-            font-size: 2.2rem;
-            color: var(--primary);
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
             font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo i {
+            color: var(--accent);
+            font-size: 2rem;
+            background: var(--card-bg);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--neumorphic);
         }
         
         .header-controls {
             display: flex;
+            align-items: center;
             gap: 15px;
         }
         
@@ -217,139 +180,117 @@
             box-shadow: var(--neumorphic-inset);
         }
         
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .menu-toggle {
             background: var(--card-bg);
-            padding: 8px 20px;
-            border-radius: 50px;
-            box-shadow: var(--neumorphic);
-            cursor: pointer;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
+            color: var(--primary);
+            border: none;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: linear-gradient(45deg, var(--accent) 0%, var(--primary) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .dashboard-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--neumorphic);
+            cursor: pointer;
+            font-size: 1.4rem;
             transition: var(--transition);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(5px);
-        }
-        
-        .dashboard-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
-        }
-        
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 15px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-        }
-        
-        .card-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .card-title {
-            font-size: 1.2rem;
-            color: var(--gray);
-        }
-        
-        .form-section {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 40px;
             box-shadow: var(--neumorphic);
-            margin-bottom: 40px;
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(5px);
         }
         
-        .section-title {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid var(--accent);
-            display: inline-block;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: var(--text-color);
-            font-size: 1.1rem;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid var(--border-color);
-            border-radius: 15px;
-            font-size: 1rem;
-            transition: var(--transition);
-            background: var(--input-bg);
-            color: var(--text-color);
+        .menu-toggle:hover {
+            transform: scale(1.05);
             box-shadow: var(--neumorphic-inset);
         }
         
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            z-index: 1100;
+            overflow-y: auto;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            padding: 100px 25px 40px;
+            border-right: 1px solid var(--glass-border);
         }
         
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .close-sidebar {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
+        }
+        
+        .close-sidebar:hover {
+            transform: rotate(90deg);
+            box-shadow: var(--neumorphic-inset);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 15px 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+            background: var(--card-bg);
+            box-shadow: var(--neumorphic);
+        }
+        
+        .nav-links a i {
+            width: 25px;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .nav-links a:hover i,
+        .nav-links a.active i {
+            color: white;
+        }
+        
+        .sidebar-cta {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         
         .btn {
-            padding: 16px 30px;
+            padding: 16px 25px;
             border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
@@ -358,7 +299,7 @@
             font-size: 1.05rem;
             text-align: center;
             text-decoration: none;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
@@ -379,163 +320,766 @@
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5);
         }
         
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-5px);
-        }
-        
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-        
-        .tutor-list {
-            margin-top: 30px;
-        }
-        
-        .tutor-item {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--neumorphic);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-        }
-        
-        .tutor-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
-        }
-        
-        .tutor-info h4 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-            color: var(--primary);
-        }
-        
-        .tutor-info p {
-            color: var(--gray);
-            margin-bottom: 5px;
-        }
-        
-        .tutor-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
-        .status-active {
-            background: var(--success);
-            color: white;
-        }
-        
-        .status-inactive {
-            background: var(--danger);
-            color: white;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            padding: 20px 25px;
-            border-radius: 15px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 2000;
-            animation: slideInRight 0.5s ease-out;
-            max-width: 400px;
-        }
-        
-        .notification.success {
-            background: #25D366;
-        }
-        
-        .notification.error {
-            background: #FF5252;
-        }
-        
-        .notification.fade-out {
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        
-        .debug-panel {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--neumorphic);
-            margin-top: 40px;
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(5px);
-        }
-        
-        .debug-panel h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .connection-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--success);
-        }
-        
-        .status-indicator.offline {
-            background: var(--danger);
-        }
-        
         .btn-outline {
             background: transparent;
             border: 2px solid var(--primary);
             color: var(--primary);
-            margin-top: 20px;
         }
         
         .btn-outline:hover {
             background: var(--primary);
             color: white;
+            transform: translateY(-5px);
         }
         
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(0);
-            }
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 100px 0 120px;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 40px 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        .btn-light {
+            background-color: white;
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-light:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.4);
+        }
+        
+        .features {
+            padding: 70px 0;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 15px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            display: inline-block;
+            transition: var(--transition);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: var(--accent);
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 25px auto 0;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            padding: 0 15px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+        
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            color: white;
+            font-size: 2.5rem;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            transition: var(--transition);
+            font-size: 1.05rem;
+        }
+        
+        .booking {
+            padding: 70px 0;
+            margin-bottom: 40px;
+        }
+        
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding: 0 15px;
+        }
+        
+        .booking-image {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 300px;
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            animation: pulse 4s infinite;
+            backdrop-filter: blur(5px);
+        }
+        
+        .booking-image i {
+            font-size: 5rem;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        
+        .booking-image h2 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .booking-form {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: var(--neumorphic);
+            animation: slideUp 0.9s ease-out;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Open Sans', sans-serif;
+            background: var(--input-bg);
+            color: var(--text-color);
+            box-shadow: var(--neumorphic-inset);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .live-class {
+            padding: 70px 0;
+            margin-bottom: 40px;
+        }
+        
+        .live-class-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding: 0 15px;
+        }
+        
+        .class-info {
+            padding: 10px;
+        }
+        
+        .class-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .class-features {
+            list-style: none;
+            margin: 35px 0;
+        }
+        
+        .class-features li {
+            padding: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        
+        .class-features li:hover {
+            transform: translateX(10px);
+        }
+        
+        .class-features li i {
+            color: var(--success);
+            font-size: 1.6rem;
+            min-width: 40px;
+        }
+        
+        .youtube-embed {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.9s ease-out;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        
+        .youtube-embed iframe {
+            display: block;
+            width: 100%;
+            height: 350px;
+            border: none;
+        }
+        
+        .tutors {
+            padding: 70px 0;
+            margin-bottom: 40px;
+        }
+        
+        .tutors-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            padding: 0 15px;
+        }
+        
+        .tutor-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--neumorphic);
+            transition: var(--transition);
+            animation: fadeIn 0.8s ease-out;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        
+        .tutor-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+        
+        .tutor-image {
+            height: 250px;
+            background: linear-gradient(45deg, var(--accent) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+        
+        .tutor-info {
+            padding: 30px 25px;
+            text-align: center;
+        }
+        
+        .tutor-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        
+        .tutor-subject {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .tutor-rating {
+            color: var(--warning);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .tutor-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--success);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tutor-status.unavailable {
+            background: var(--danger);
+        }
+        
+        .about {
+            padding: 90px 0;
+            margin-bottom: 40px;
+        }
+        
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        .about-content {
+            padding: 20px;
+        }
+        
+        .about-content h2 {
+            font-size: 2.7rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .about-content p {
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: var(--gray);
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--neumorphic);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        
+        .stat-text {
+            font-size: 1.2rem;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        .about-image {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 25px;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            animation: float 6s ease-in-out infinite;
+            border: 1px solid var(--border-color);
+        }
+        
+        .contact {
+            padding: 90px 0;
+            margin-bottom: 40px;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        .contact-form {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: var(--neumorphic);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .contact-form h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        
+        textarea.form-control {
+            min-height: 180px;
+            resize: vertical;
+        }
+        
+        .contact-info {
+            padding: 20px;
+        }
+        
+        .info-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--neumorphic);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+        
+        .info-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .contact-details {
+            list-style: none;
+        }
+        
+        .contact-details li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .contact-details i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-top: 4px;
+        }
+        
+        .contact-details span {
+            color: var(--text-color);
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .map-container {
+            height: 350px;
+            background: var(--light-gray);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-weight: bold;
+            box-shadow: var(--neumorphic);
+            border: 1px solid var(--border-color);
+        }
+        
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 70px 0 30px;
+            margin-top: 60px;
+            transition: var(--transition);
+            border-radius: 40px 40px 0 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 16px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(8px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+            font-size: 1.4rem;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-8px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            padding: 30px 15px 0;
+        }
+        
+        .whatsapp-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 2000;
+            animation: slideInRight 0.5s ease-out;
+            max-width: 350px;
+        }
+        
+        .whatsapp-notification.hidden {
+            display: none;
+        }
+        
+        .whatsapp-icon {
+            font-size: 2.5rem;
+        }
+        
+        .whatsapp-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        
+        .close-whatsapp {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 15px;
         }
         
         @keyframes fadeIn {
@@ -549,283 +1093,711 @@
             }
         }
         
-        @media (max-width: 992px) {
-            .admin-container {
-                flex-direction: column;
-                min-height: auto;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
             }
-            .admin-sidebar {
-                width: 100%;
-                padding: 20px;
-            }
-            .admin-main {
-                padding: 30px;
-            }
-            .dashboard-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
         
-        @media (max-width: 576px) {
-            .admin-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
             }
-            .header-controls {
-                width: 100%;
-                justify-content: space-between;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            .form-section {
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-25px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        .video-update-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 16px 25px;
+            background: var(--primary);
+            color: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .video-update-notification.fade-out {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--body-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-container {
+            text-align: center;
+        }
+        
+        .logo-loader {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            position: relative;
+            border-radius: 50%;
+            background: var(--card-bg);
+            box-shadow: var(--neumorphic);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        .logo-loader img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .loading-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-text::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: textLoading 1.5s infinite;
+        }
+        
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            animation: dotPulse 1.5s infinite ease-in-out;
+        }
+        
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes textLoading {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        @keyframes dotPulse {
+            0%,
+            100% {
+                transform: scale(0.8);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            header {
+                padding: 0 15px;
+                height: 70px;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .logo i {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+            .theme-toggle,
+            .menu-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            .hero {
+                padding: 80px 0 100px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .section-title p {
+                font-size: 1rem;
+            }
+            .booking-form,
+            .contact-form {
                 padding: 25px;
             }
-            .dashboard-card {
-                padding: 25px;
+            .form-title {
+                font-size: 1.8rem;
             }
-            .tutor-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
+            .feature-card,
+            .tutor-card,
+            .stat-card,
+            .info-card {
+                padding: 25px 20px;
             }
-            .tutor-actions {
-                width: 100%;
-                justify-content: flex-end;
+            .feature-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            .feature-card h3 {
+                font-size: 1.4rem;
+            }
+            .about-image {
+                height: 300px;
+            }
+            .map-container {
+                height: 250px;
+            }
+            .youtube-embed iframe {
+                height: 250px;
+            }
+            .whatsapp-notification {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
+            }
+            .viewer-count-badge {
+                top: 10px;
+                right: 10px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (min-width: 576px) {
+            .features-grid,
+            .tutors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .booking-image {
+                height: 350px;
+            }
+            .about-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .hero {
+                padding: 120px 0 140px;
+            }
+            .hero h1 {
+                font-size: 4rem;
+            }
+            .features-grid,
+            .tutors-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .booking-container,
+            .live-class-container,
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .booking-image {
+                height: 100%;
+            }
+            .tutors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .hero {
+                padding: 140px 0 160px;
+            }
+            .hero h1 {
+                font-size: 4.5rem;
+            }
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .tutors-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="admin-container">
-        <div class="admin-sidebar">
-            <div class="admin-logo">
-                <i class="fas fa-graduation-cap"></i>
-                <h1>TutorConnect Admin</h1>
+    <div id="loading-screen">
+        <div class="loader-container">
+            <div class="logo-loader">
+                <img src="assets/De-briliant-logo.png" alt="De-Brilliant Logo">
             </div>
-
-            <div class="admin-nav">
-                <a href="#" class="active" data-section="dashboard">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
-                </a>
-                <a href="#" data-section="tutors">
-                    <i class="fas fa-chalkboard-teacher"></i> Tutor Management
-                </a>
-                <a href="#" data-section="video">
-                    <i class="fas fa-video"></i> Live Class Video
-                </a>
-                <a href="#" data-section="stats">
-                    <i class="fas fa-chart-line"></i> Statistics
-                </a>
+            <div class="loading-text">De-Brilliant TutorConnect</div>
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
+        </div>
+    </div>
 
-            <div class="admin-stats">
-                <h3><i class="fas fa-chart-line"></i> Quick Stats</h3>
-                <div class="stat-item">
-                    <span>Active Tutors</span>
-                    <strong id="activeTutorsCount">0</strong>
-                </div>
-                <div class="stat-item">
-                    <span>Live Viewers</span>
-                    <strong id="liveViewersCount">0</strong>
-                </div>
-                <div class="stat-item">
-                    <span>Total Tutors</span>
-                    <strong id="totalTutorsCount">0</strong>
+    <header>
+        <div class="mobile-header">
+            <a href="#" class="logo">
+                <img src="assets/De-briliant-logo.png" width="50px" height="50px" style="border-radius:50%; object-fit:cover;">
+                <span>TutorConnect</span>
+            </a>
+            <div class="header-controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <button class="close-sidebar" id="closeSidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="logo" style="color: var(--primary-dark); padding: 0 15px;">
+            <img src="assets/De-briliant-logo.jpg" width="50px" height="50px" style="border-radius:50%; object-fit:cover;">
+            <span>De-Brilliant TutorConnect</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+            <a href="#booking"><i class="fas fa-calendar-check"></i> Book a Tutor</a>
+            <a href="#live-class"><i class="fas fa-video"></i> Live Classes</a>
+            <a href="#tutors"><i class="fas fa-chalkboard-teacher"></i> Tutors</a>
+            <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+            <a href="#contact"><i class="fas fa-phone"></i> Contact</a>
+        </div>
+        <div class="sidebar-cta">
+            <a href="admin.html" style="text-decoration:none;"><button class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Admin Login
+            </button></a>
+            <button class="btn btn-outline">
+                <i class="fas fa-user-plus"></i> Student Sign Up
+            </button>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Personalized Tutoring, Brilliant Results</h1>
+                <p>Connect with expert tutors for one-on-one sessions or join interactive live classes from the comfort of your home.</p>
+                <div class="hero-buttons">
+                    <a href="#tutors" style="text-decoration:none;">
+                        <button class="btn btn-light">
+                            <i class="fas fa-search"></i> Find a Tutor
+                        </button>
+                    </a>
+                    <a href="#live-class" style="text-decoration:none;">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-chalkboard"></i> Join a Class
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="admin-main">
-            <div class="admin-header">
-                <h2>Admin Dashboard</h2>
-                <div class="header-controls">
-                    <button class="theme-toggle" id="themeToggle">
-                        <i class="fas fa-moon"></i>
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>How TutorConnect Works</h2>
+                <p>Simple steps to connect with the perfect tutor and achieve your learning goals</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Find Your Tutor</h3>
+                    <p>Browse our expert tutors by subject, availability, and ratings to find your perfect match.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Book a Session</h3>
+                    <p>Select your preferred date and time, and instantly book your tutoring session.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Join Live Class</h3>
+                    <p>Connect with your tutor through our secure, interactive virtual classroom.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="booking" id="booking">
+        <div class="container">
+            <div class="section-title">
+                <h2>Book Your Tutoring Session</h2>
+                <p>Schedule a one-on-one session with our expert tutors</p>
+            </div>
+            <div class="booking-container">
+                <div class="booking-image">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h2>Personalized Learning Experience</h2>
+                </div>
+                <div class="booking-form">
+                    <h2 class="form-title">Book a Tutor</h2>
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" class="form-control" required>
+                                <option value="">Select a subject</option>
+                                <option value="math">Mathematics</option>
+                                <option value="science">Science</option>
+                                <option value="english">English</option>
+                                <option value="history">History</option>
+                                <option value="programming">Programming</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tutor">Preferred Tutor</label>
+                            <select id="tutor" class="form-control" required>
+                                <option value="">Select a tutor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date & Time</label>
+                            <input type="datetime-local" id="date" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i> Book Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="live-class" id="live-class">
+        <div class="container">
+            <div class="section-title">
+                <h2>Interactive Live Classes</h2>
+                <p>Experience real-time learning with our virtual classroom platform</p>
+            </div>
+            <div class="live-class-container">
+                <div class="class-info">
+                    <h2>Engaging Virtual Learning</h2>
+                    <p>Our live class platform brings the classroom experience to your home with interactive tools designed for engagement and collaboration.</p>
+                    <ul class="class-features">
+                        <li>
+                            <i class="fas fa-video"></i>
+                            <span>Real-time video and audio communication</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-share-alt"></i>
+                            <span>Interactive Classroom</span>
+                        </li>
+                    </ul>
+                    <button class="btn btn-primary" id="joinLiveClass">
+                        <i class="fas fa-door-open"></i> Join a Live Class
                     </button>
-                    <div class="user-profile">
-                        <div class="user-avatar">AD</div>
-                        <span>Admin User</span>
+                </div>
+                <div class="youtube-embed">
+                    <div class="viewer-count-badge" id="viewerCountBadge">
+                        <i class="fas fa-eye"></i>
+                        <span id="liveViewerCount">0</span> watching
                     </div>
+                    <iframe id="liveClassVideo" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div id="dashboardSection" class="section-content">
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
-                        <div class="card-value" id="cardTutors">0</div>
-                        <div class="card-title">Active Tutors</div>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-eye"></i>
-                            </div>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
-                        <div class="card-value" id="cardViewers">0</div>
-                        <div class="card-title">Live Viewers</div>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
-                        <div class="card-value">0</div>
-                        <div class="card-title">Bookings Today</div>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
-                        <div class="card-value">4.8</div>
-                        <div class="card-title">Avg. Rating</div>
-                    </div>
-                </div>
+    <section class="tutors" id="tutors">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Expert Tutors</h2>
+                <p>Meet our team of qualified and experienced tutors ready to help you succeed</p>
             </div>
-
-            <div id="tutorsSection" class="section-content" style="display: none;">
-                <div class="form-section">
-                    <h3 class="section-title">Add/Edit Tutor</h3>
-                    <form id="tutorForm">
-                        <input type="hidden" id="tutorId">
-                        <div class="form-group">
-                            <label for="tutorName">Full Name *</label>
-                            <input type="text" id="tutorName" class="form-control" required placeholder="Enter tutor's full name">
-                        </div>
-                        <div class="form-group">
-                            <label for="tutorSubject">Subject *</label>
-                            <input type="text" id="tutorSubject" class="form-control" required placeholder="e.g., Mathematics, Science">
-                        </div>
-                        <div class="form-group">
-                            <label for="tutorRating">Rating (1-5) *</label>
-                            <input type="number" id="tutorRating" class="form-control" min="1" max="5" step="0.1" required placeholder="4.5">
-                        </div>
-                        <div class="form-group">
-                            <label for="tutorExperience">Experience</label>
-                            <input type="text" id="tutorExperience" class="form-control" placeholder="e.g., 5 years experience">
-                        </div>
-                        <div class="form-group">
-                            <label for="tutorDescription">Description *</label>
-                            <textarea id="tutorDescription" class="form-control" required placeholder="Enter tutor description"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="tutorStatus">Status *</label>
-                            <select id="tutorStatus" class="form-control" required>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tutorAvailable">Availability *</label>
-                            <select id="tutorAvailable" class="form-control" required>
-                                <option value="true">Available</option>
-                                <option value="false">Busy</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary" id="saveTutorBtn">
-                                <i class="fas fa-save"></i> Save Tutor
-                            </button>
-                            <button type="button" class="btn btn-outline" id="cancelEditBtn" style="display: none;">
-                                <i class="fas fa-times"></i> Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="form-section">
-                    <h3 class="section-title">Manage Tutors</h3>
-                    <div id="tutorsList" class="tutor-list">
-                    </div>
-                </div>
+            <div class="tutors-grid" id="tutorsGrid">
             </div>
+        </div>
+    </section>
 
-            <div id="videoSection" class="section-content" style="display: none;">
-                <div class="form-section">
-                    <h3 class="section-title">Live Class Video Management</h3>
-                    <form id="videoForm">
-                        <div class="form-group">
-                            <label for="youtubeLink">YouTube Video ID *</label>
-                            <input type="text" id="youtubeLink" class="form-control" required placeholder="e.g., lIjEsfAxzGE">
-                            <small style="color: var(--gray); margin-top: 5px; display: block;">
-                                From URL: youtube.com/watch?v=<strong>VIDEO_ID</strong>
-                            </small>
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About De-Brilliant TutorConnect</h2>
+                <p>Learn more about our mission and values</p>
+            </div>
+            <div class="about-container">
+                <div class="about-content">
+                    <h2>Transforming Education Through Technology</h2>
+                    <p>De-Brilliant TutorConnect was founded in 2020 with a mission to make quality education accessible to everyone. We believe that personalized learning experiences can unlock every student's potential.</p>
+                    <p>Our platform connects students with expert tutors in various subjects, providing flexible learning options that fit into busy schedules. Whether you need help with a specific subject, test preparation, or want to learn a new skill,
+                        we've got you covered.</p>
+                    <p>We carefully vet all our tutors to ensure they have the expertise, teaching skills, and passion needed to help students succeed. Our innovative virtual classroom technology makes online learning as effective as in-person sessions.</p>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="tutorCount">0</div>
+                            <div class="stat-text">Expert Tutors</div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-sync-alt"></i> Update Live Class Video
-                            </button>
+                        <div class="stat-card">
+                            <div class="stat-number">20K+</div>
+                            <div class="stat-text">Students Taught</div>
                         </div>
-                    </form>
-
-                    <div class="form-group" style="margin-top: 30px;">
-                        <h4 style="margin-bottom: 15px;">Current Live Viewers</h4>
-                        <div class="dashboard-card">
-                            <div class="card-value" id="currentViewers">0</div>
-                            <div class="card-title">People watching now</div>
+                        <div class="stat-card">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-text">Satisfaction Rate</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-text">Subjects Covered</div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div id="statsSection" class="section-content" style="display: none;">
-                <div class="form-section">
-                    <h3 class="section-title">System Statistics</h3>
-                    <div class="dashboard-grid">
-                        <div class="dashboard-card">
-                            <div class="card-header">
-                                <div class="card-icon">
-                                    <i class="fas fa-user-graduate"></i>
-                                </div>
-                            </div>
-                            <div class="card-value" id="statStudents">0</div>
-                            <div class="card-title">Total Students</div>
-                        </div>
-                        <div class="dashboard-card">
-                            <div class="card-header">
-                                <div class="card-icon">
-                                    <i class="fas fa-chalkboard-teacher"></i>
-                                </div>
-                            </div>
-                            <div class="card-value" id="statTutors">0</div>
-                            <div class="card-title">Total Tutors</div>
-                        </div>
-                        <div class="dashboard-card">
-                            <div class="card-header">
-                                <div class="card-icon">
-                                    <i class="fas fa-calendar-check"></i>
-                                </div>
-                            </div>
-                            <div class="card-value" id="statBookings">0</div>
-                            <div class="card-title">Total Bookings</div>
-                        </div>
-                        <div class="dashboard-card">
-                            <div class="card-header">
-                                <div class="card-icon">
-                                    <i class="fas fa-video"></i>
-                                </div>
-                            </div>
-                            <div class="card-value" id="statSessions">0</div>
-                            <div class="card-title">Live Sessions</div>
-                        </div>
+                <div class="about-image">
+                    <div style="text-align: center; padding: 20px;">
+                        <i class="fas fa-lightbulb" style="font-size: 5rem; margin-bottom: 30px;"></i>
+                        <h2 style="font-size: 2.5rem;">Innovative Learning Solutions</h2>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our support team</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-form">
+                    <h2>Send Us a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name">Full Name</label>
+                                <input type="text" id="contact-name" class="form-control" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email Address</label>
+                                <input type="email" id="contact-email" class="form-control" placeholder="Your email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Subject</label>
+                            <input type="text" id="contact-subject" class="form-control" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" class="form-control" placeholder="Your message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="info-card">
+                        <h3>Contact Information</h3>
+                        <ul class="contact-details">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Yabatech Epe Campus</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>09037112132</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>contact@debrilliant.com</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <span>Monday - Friday: 9:00 AM - 8:00 PM</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="map-container">
+                        <i class="fas fa-map-marked-alt" style="font-size: 3.5rem; margin-bottom: 20px;"></i>
+                        <p style="font-size: 1.2rem;">Interactive Map Location</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>De-Brilliant TutorConnect</h3>
+                    <p>Transforming education through personalized online tutoring and interactive live classes.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/de_brilliant_academy?igsh=eDZmNTFuMGQ2b2c="><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#booking"><i class="fas fa-chevron-right"></i> Book a Tutor</a></li>
+                        <li><a href="#live-class"><i class="fas fa-chevron-right"></i> Live Classes</a></li>
+                        <li><a href="#tutors"><i class="fas fa-chevron-right"></i> Our Tutors</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Subjects</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mathematics</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Science</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> English</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> History</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Programming</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@debrilliant.com</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i>09037112132</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Yabatech Epe Campus</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 De-Brilliant TutorConnect. All rights reserved. <br><br>
+                <strong>Packaged by Computer & Robotics Education 2024/2025</strong>
+            </div>
+        </div>
+    </footer>
+
+    <div class="whatsapp-notification hidden" id="whatsappNotification">
+        <div class="whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="whatsapp-content">
+            <h4>Booking Confirmation</h4>
+            <p>Your booking details have been sent to our team via WhatsApp!</p>
+        </div>
+        <button class="close-whatsapp" id="closeWhatsapp">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -846,25 +1818,42 @@
         }
         const db = firebase.firestore();
 
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const body = document.body;
         const themeToggle = document.getElementById('themeToggle');
-        const videoForm = document.getElementById('videoForm');
-        const tutorForm = document.getElementById('tutorForm');
-        const tutorsList = document.getElementById('tutorsList');
-        const saveTutorBtn = document.getElementById('saveTutorBtn');
-        const cancelEditBtn = document.getElementById('cancelEditBtn');
-        const navLinks = document.querySelectorAll('.admin-nav a');
-        const sectionContents = document.querySelectorAll('.section-content');
-
-        const activeTutorsCount = document.getElementById('activeTutorsCount');
-        const liveViewersCount = document.getElementById('liveViewersCount');
-        const totalTutorsCount = document.getElementById('totalTutorsCount');
-        const cardTutors = document.getElementById('cardTutors');
-        const cardViewers = document.getElementById('cardViewers');
-        const currentViewers = document.getElementById('currentViewers');
-
-        let editingTutorId = null;
-
         const themeIcon = themeToggle.querySelector('i');
+        const bookingForm = document.getElementById('bookingForm');
+        const tutorsGrid = document.getElementById('tutorsGrid');
+        const tutorSelect = document.getElementById('tutor');
+        const tutorCountElement = document.getElementById('tutorCount');
+        const liveViewerCount = document.getElementById('liveViewerCount');
+        const joinLiveClassBtn = document.getElementById('joinLiveClass');
+
+        const viewerId = 'viewer_' + Math.random().toString(36).substr(2, 9);
+        let viewerInterval;
+        let viewerCleanupInterval;
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            body.classList.add('sidebar-open');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            body.classList.remove('sidebar-open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('open') &&
+                !sidebar.contains(e.target) &&
+                !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('open');
+                body.classList.remove('sidebar-open');
+            }
+        });
+
         if (localStorage.getItem('darkMode') === 'enabled') {
             document.body.classList.add('dark-mode');
             themeIcon.classList.remove('fa-moon');
@@ -873,6 +1862,7 @@
 
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
+
             if (document.body.classList.contains('dark-mode')) {
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
@@ -884,252 +1874,117 @@
             }
         });
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const section = link.getAttribute('data-section');
-
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-
-                sectionContents.forEach(content => content.style.display = 'none');
-                document.getElementById(`${section}Section`).style.display = 'block';
-            });
-        });
-
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                <div>${message}</div>
-            `;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.classList.add('fade-out');
-                setTimeout(() => notification.remove(), 500);
-            }, 3000);
-        }
-
-        function isValidYouTubeId(id) {
-            return /^[a-zA-Z0-9_-]{11}$/.test(id);
-        }
-
-        videoForm.addEventListener('submit', async(e) => {
-            e.preventDefault();
-            const videoId = document.getElementById('youtubeLink').value.trim();
-
-            if (!videoId) {
-                showNotification('❌ Please enter a YouTube Video ID', 'error');
-                return;
-            }
-
-            if (!isValidYouTubeId(videoId)) {
-                showNotification('❌ Invalid YouTube ID format (must be 11 characters)', 'error');
-                return;
-            }
-
-            const submitBtn = videoForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-
-            try {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
-
-                await db.collection("config").doc("liveClass").set({
-                    videoId: videoId,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                showNotification('✅ Live class video updated successfully!', 'success');
-            } catch (error) {
-                console.error("Update error:", error);
-                showNotification(`❌ Failed to update: ${error.message}`, 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
-            }
-        });
-
         function loadTutors() {
-            db.collection("tutors").onSnapshot((querySnapshot) => {
-                        tutorsList.innerHTML = '';
-                        let activeCount = 0;
-                        let totalCount = 0;
+            console.log("Loading tutors...");
 
-                        if (querySnapshot.empty) {
-                            tutorsList.innerHTML = `
-                        <div style="text-align: center; padding: 40px; color: var(--gray);">
-                            <i class="fas fa-users-slash" style="font-size: 3rem; margin-bottom: 20px;"></i>
-                            <h3>No tutors found</h3>
-                            <p>Add your first tutor using the form above.</p>
-                        </div>
-                    `;
+            db.collection("tutors")
+                .onSnapshot((querySnapshot) => {
+                    console.log("Tutors data received:", querySnapshot.size, "tutors");
+
+                    const tutors = [];
+                    tutorsGrid.innerHTML = '';
+                    tutorSelect.innerHTML = '<option value="">Select a tutor</option>';
+
+                    querySnapshot.forEach((doc) => {
+                        const tutorData = doc.data();
+                        console.log("Tutor data:", tutorData);
+
+                        const tutor = {
+                            id: doc.id,
+                            name: tutorData.name || 'No Name',
+                            subject: tutorData.subject || 'No Subject',
+                            rating: tutorData.rating || 0,
+                            experience: tutorData.experience || '',
+                            description: tutorData.description || '',
+                            status: tutorData.status || 'inactive',
+                            available: tutorData.available !== false
+                        };
+
+                        tutors.push(tutor);
+
+                        const tutorCard = createTutorCard(tutor);
+                        tutorsGrid.appendChild(tutorCard);
+
+                        if (tutor.status === 'active') {
+                            const option = document.createElement('option');
+                            option.value = tutor.id;
+                            option.textContent = `${tutor.name} (${tutor.subject})`;
+                            tutorSelect.appendChild(option);
                         }
+                    });
 
-                        querySnapshot.forEach((doc) => {
-                                    const tutor = doc.data();
-                                    const tutorId = doc.id;
-                                    totalCount++;
-                                    if (tutor.status === 'active') activeCount++;
+                    const activeTutors = tutors.filter(t => t.status === 'active');
+                    tutorCountElement.textContent = activeTutors.length;
+                    console.log("Active tutors count:", activeTutors.length);
 
-                                    const tutorItem = document.createElement('div');
-                                    tutorItem.className = 'tutor-item';
-                                    tutorItem.innerHTML = `
-                        <div class="tutor-info">
-                            <h4>${tutor.name || 'No Name'} 
-                                <span class="status-badge ${tutor.status === 'active' ? 'status-active' : 'status-inactive'}">
-                                    ${tutor.status || 'inactive'}
-                                </span>
-                                <span class="status-badge ${tutor.available ? 'status-active' : 'status-inactive'}">
-                                    ${tutor.available ? 'Available' : 'Busy'}
-                                </span>
-                            </h4>
-                            <p><strong>Subject:</strong> ${tutor.subject || 'No Subject'}</p>
-                            <p><strong>Rating:</strong> ${tutor.rating || 0} ⭐</p>
-                            ${tutor.experience ? `<p><strong>Experience:</strong> ${tutor.experience}</p>` : ''}
-                            <p>${tutor.description || ''}</p>
-                        </div>
-                        <div class="tutor-actions">
-                            <button class="btn btn-primary edit-tutor-btn" data-id="${tutorId}">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="btn btn-danger delete-tutor-btn" data-id="${tutorId}">
-                                <i class="fas fa-trash"></i> Delete
+                    if (tutors.length === 0) {
+                        tutorsGrid.innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                                <i class="fas fa-users-slash" style="font-size: 3rem; color: var(--gray); margin-bottom: 20px;"></i>
+                                <h3 style="color: var(--gray);">No tutors available at the moment</h3>
+                                <p>Please check back later or contact us for more information.</p>
+                            </div>
+                        `;
+                    }
+                }, (error) => {
+                    console.error("Error loading tutors:", error);
+                    tutorsGrid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--danger);">
+                            <h3>Error loading tutors</h3>
+                            <p>${error.message}</p>
+                            <button onclick="loadTutors()" class="btn btn-primary" style="margin-top: 20px;">
+                                <i class="fas fa-redo"></i> Retry
                             </button>
                         </div>
                     `;
-                    tutorsList.appendChild(tutorItem);
                 });
-
-                activeTutorsCount.textContent = activeCount;
-                totalTutorsCount.textContent = totalCount;
-                cardTutors.textContent = activeCount;
-                
-                document.querySelectorAll('.edit-tutor-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const tutorId = e.target.closest('.edit-tutor-btn').getAttribute('data-id');
-                        editTutor(tutorId);
-                    });
-                });
-
-                document.querySelectorAll('.delete-tutor-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const tutorId = e.target.closest('.delete-tutor-btn').getAttribute('data-id');
-                        deleteTutor(tutorId);
-                    });
-                });
-            });
         }
 
-        async function editTutor(tutorId) {
-            try {
-                const doc = await db.collection("tutors").doc(tutorId).get();
-                if (doc.exists) {
-                    const tutor = doc.data();
-                    document.getElementById('tutorId').value = tutorId;
-                    document.getElementById('tutorName').value = tutor.name || '';
-                    document.getElementById('tutorSubject').value = tutor.subject || '';
-                    document.getElementById('tutorRating').value = tutor.rating || 0;
-                    document.getElementById('tutorExperience').value = tutor.experience || '';
-                    document.getElementById('tutorDescription').value = tutor.description || '';
-                    document.getElementById('tutorStatus').value = tutor.status || 'active';
-                    document.getElementById('tutorAvailable').value = tutor.available ? 'true' : 'false';
-                    
-                    editingTutorId = tutorId;
-                    saveTutorBtn.innerHTML = '<i class="fas fa-save"></i> Update Tutor';
-                    cancelEditBtn.style.display = 'inline-flex';
-                    
-                    document.getElementById('tutorForm').scrollIntoView({ behavior: 'smooth' });
-                }
-            } catch (error) {
-                console.error("Error loading tutor:", error);
-                showNotification('❌ Error loading tutor details', 'error');
-            }
+        function createTutorCard(tutor) {
+            const card = document.createElement('div');
+            card.className = 'tutor-card';
+            card.innerHTML = `
+                <div class="tutor-image">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="tutor-info">
+                    <h3>${tutor.name}</h3>
+                    <div class="tutor-subject">${tutor.subject}</div>
+                    <div class="tutor-rating">
+                        ${generateStarRating(tutor.rating)}
+                        <span style="margin-left: 8px; color: var(--gray);">${tutor.rating}</span>
+                    </div>
+                    <p>${tutor.description}</p>
+                    ${tutor.experience ? `<p><small>${tutor.experience}</small></p>` : ''}
+                </div>
+                ${tutor.status === 'active' && tutor.available ? 
+                    '<div class="tutor-status">Available</div>' : 
+                    '<div class="tutor-status unavailable">Unavailable</div>'}
+            `;
+            return card;
         }
 
-        async function deleteTutor(tutorId) {
-            if (!confirm('Are you sure you want to delete this tutor?')) return;
-
-            try {
-                await db.collection("tutors").doc(tutorId).delete();
-                showNotification('✅ Tutor deleted successfully', 'success');
-                
-                if (editingTutorId === tutorId) {
-                    resetTutorForm();
-                }
-            } catch (error) {
-                console.error("Error deleting tutor:", error);
-                showNotification('❌ Error deleting tutor', 'error');
-            }
-        }
-
-        function resetTutorForm() {
-            tutorForm.reset();
-            document.getElementById('tutorId').value = '';
-            editingTutorId = null;
-            saveTutorBtn.innerHTML = '<i class="fas fa-save"></i> Save Tutor';
-            cancelEditBtn.style.display = 'none';
-        }
-
-        tutorForm.addEventListener('submit', async(e) => {
-            e.preventDefault();
-
-            const tutorData = {
-                name: document.getElementById('tutorName').value.trim(),
-                subject: document.getElementById('tutorSubject').value.trim(),
-                rating: parseFloat(document.getElementById('tutorRating').value) || 0,
-                experience: document.getElementById('tutorExperience').value.trim(),
-                description: document.getElementById('tutorDescription').value.trim(),
-                status: document.getElementById('tutorStatus').value,
-                available: document.getElementById('tutorAvailable').value === 'true',
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
-
-            if (!editingTutorId) {
-                tutorData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-            }
-
-            const submitBtn = document.getElementById('saveTutorBtn');
-            const originalText = submitBtn.innerHTML;
-
-            try {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-
-                if (editingTutorId) {
-                    await db.collection("tutors").doc(editingTutorId).update(tutorData);
-                    showNotification('✅ Tutor updated successfully!', 'success');
+        function generateStarRating(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            
+            for (let i = 0; i < 5; i++) {
+                if (i < fullStars) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === fullStars && halfStar) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
                 } else {
-                    await db.collection("tutors").add(tutorData);
-                    showNotification('✅ Tutor added successfully!', 'success');
+                    stars += '<i class="far fa-star"></i>';
                 }
-
-                resetTutorForm();
-            } catch (error) {
-                console.error("Save error:", error);
-                showNotification(`❌ Failed to save tutor: ${error.message}`, 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
             }
-        });
-
-        cancelEditBtn.addEventListener('click', resetTutorForm);
-
-        async function loadCurrentVideo() {
-            try {
-                const doc = await db.collection("config").doc("liveClass").get();
-                if (doc.exists) {
-                    document.getElementById('youtubeLink').value = doc.data().videoId || '';
-                }
-            } catch (error) {
-                console.error("Error loading video:", error);
-            }
+            return stars;
         }
 
-        function monitorLiveViewers() {
+        function startViewerTracking() {
+            registerViewer();
+            viewerInterval = setInterval(registerViewer, 20000);
+            
             db.collection("viewers").onSnapshot((querySnapshot) => {
                 const now = Date.now();
                 let activeViewers = 0;
@@ -1141,28 +1996,167 @@
                     }
                 });
                 
-                liveViewersCount.textContent = activeViewers;
-                cardViewers.textContent = activeViewers;
-                currentViewers.textContent = activeViewers;
+                liveViewerCount.textContent = activeViewers;
+            });
+            
+            viewerCleanupInterval = setInterval(cleanupOldViewers, 60000);
+        }
+
+        function registerViewer() {
+            db.collection("viewers").doc(viewerId).set({
+                lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+                userAgent: navigator.userAgent
+            }).catch(error => {
+                console.error("Error registering viewer:", error);
             });
         }
 
-        async function init() {
-            try {
-                loadTutors();
-                loadCurrentVideo();
-                monitorLiveViewers();
-                
-                document.querySelectorAll('.dashboard-card').forEach((card, index) => {
-                    card.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
-                    card.style.opacity = 0;
+        function cleanupOldViewers() {
+            const thirtySecondsAgo = new Date(Date.now() - 30000);
+            
+            db.collection("viewers")
+                .where("lastSeen", "<", thirtySecondsAgo)
+                .get()
+                .then((querySnapshot) => {
+                    const batch = db.batch();
+                    querySnapshot.forEach((doc) => {
+                        batch.delete(doc.ref);
+                    });
+                    return batch.commit();
+                })
+                .catch(error => {
+                    console.error("Error cleaning up viewers:", error);
                 });
-            } catch (error) {
-                console.error("Initialization error:", error);
-            }
         }
 
-        init();
+        db.collection("config").doc("liveClass").onSnapshot(
+            (doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const videoId = data.videoId;
+                    const iframe = document.getElementById('liveClassVideo');
+                    
+                    if (videoId && !iframe.src.includes(videoId)) {
+                        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0`;
+                        showVideoUpdatedNotification();
+                    }
+                }
+            },
+            (error) => {
+                console.error("Firestore error:", error);
+            }
+        );
+
+        function showVideoUpdatedNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'video-update-notification';
+            notification.innerHTML = `
+                <i class="fas fa-sync-alt"></i>
+                Live class video has been updated
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        }
+
+        joinLiveClassBtn.addEventListener('click', () => {
+            const iframe = document.getElementById('liveClassVideo');
+            const videoUrl = iframe.src.replace('autoplay=0', 'autoplay=1');
+            window.open(videoUrl, '_blank');
+        });
+
+        const whatsappNotification = document.getElementById('whatsappNotification');
+        const closeWhatsapp = document.getElementById('closeWhatsapp');
+
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const tutorId = document.getElementById('tutor').value;
+            const tutorName = tutorSelect.options[tutorSelect.selectedIndex].text;
+            const date = document.getElementById('date').value;
+
+            const formattedDate = new Date(date).toLocaleString();
+
+            const message = `New Tutoring Booking:
+            
+Name: ${name}
+Email: ${email}
+Subject: ${subject}
+Tutor: ${tutorName}
+Date & Time: ${formattedDate}
+
+Please confirm this booking.`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappNumber = "2349037112132";
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappUrl, '_blank');
+
+            whatsappNotification.classList.remove('hidden');
+
+            bookingForm.reset();
+        });
+
+        closeWhatsapp.addEventListener('click', () => {
+            whatsappNotification.classList.add('hidden');
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent successfully! We will get back to you soon.');
+            this.reset();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                sidebar.classList.remove('open');
+                body.classList.remove('sidebar-open');
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.feature-card, .tutor-card, .booking-form, .stat-card, .info-card');
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (elementPosition < screenPosition) {
+                    element.style.animation = 'fadeIn 0.8s ease-out forwards';
+                }
+            });
+        };
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    loadingScreen.remove();
+                }, 500);
+                
+                loadTutors();
+                startViewerTracking();
+                animateOnScroll();
+            }, 1500);
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+
+        window.addEventListener('beforeunload', () => {
+            db.collection("viewers").doc(viewerId).delete().catch(() => {});
+            if (viewerInterval) clearInterval(viewerInterval);
+            if (viewerCleanupInterval) clearInterval(viewerCleanupInterval);
+        });
     </script>
 </body>
 
