@@ -3,349 +3,1423 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>De-Brilliant House Academy Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DE-BRILLIANT HOUSE ACADEMY | Student & Parent Dashboard</title>
+
+    <!-- Meta Tags -->
+    <meta name="description" content="DE-BRILLIANT HOUSE ACADEMY Dashboard - Track progress, access quizzes, submit homework, and communicate with tutors." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://debrilliantacademy.com/dashboard" />
+
+    <!-- Icons & Fonts -->
     <link rel="shortcut icon" href="./assets/De-briliant-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
          :root {
-            --primary: #0a3d2e;
-            /* dark green */
-            --secondary: #57e09d;
-            /* light green */
-            --bg-gradient: linear-gradient(135deg, #d5f8e6, #f0fff5);
-            /* light green background */
-            --card-bg: #fff;
-            --muted: #6b7280;
-            --shadow: 0 4px 24px rgba(10, 61, 46, 0.12);
-            --radius: 1.2rem;
-            --transition: 0.3s cubic-bezier(.4, 0, .2, 1);
+            --primary: #10B981;
+            --primary-dark: #047857;
+            --primary-light: #6EE7B7;
+            --accent: #34D399;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --light: #F9FAFB;
+            --dark: #1F2937;
+            --gray: #6B7280;
+            --light-gray: #E5E7EB;
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --sidebar-width: 280px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-color: #1F2937;
+            --body-bg: linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%);
+            --section-bg: rgba(255, 255, 255, 0.8);
+            --footer-bg: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            --border-color: rgba(209, 213, 219, 0.5);
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --neumorphic: 8px 8px 16px rgba(166, 180, 174, 0.2), -8px -8px 16px rgba(255, 255, 255, 0.7);
+            --neumorphic-inset: inset 8px 8px 16px rgba(166, 180, 174, 0.2), inset -8px -8px 16px rgba(255, 255, 255, 0.7);
+        }
+        
+        .dark-mode {
+            --primary: #10B981;
+            --primary-dark: #047857;
+            --accent: #34D399;
+            --card-bg: rgba(31, 41, 55, 0.8);
+            --text-color: #F9FAFB;
+            --body-bg: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            --section-bg: rgba(31, 41, 55, 0.8);
+            --footer-bg: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            --border-color: rgba(55, 65, 81, 0.5);
+            --input-bg: rgba(31, 41, 55, 0.8);
+            --glass-bg: rgba(31, 41, 55, 0.3);
+            --glass-border: rgba(55, 65, 81, 0.5);
+            --neumorphic: 8px 8px 16px rgba(3, 7, 18, 0.5), -8px -8px 16px rgba(31, 41, 55, 0.6);
+            --neumorphic-inset: inset 8px 8px 16px rgba(3, 7, 18, 0.5), inset -8px -8px 16px rgba(55, 65, 81, 0.6);
         }
         
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-gradient);
-            color: var(--primary);
-            min-height: 100vh;
+            font-family: 'Open Sans', sans-serif;
+            background: var(--body-bg);
+            color: var(--text-color);
+            line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            padding-top: 80px;
+            transition: background 0.8s ease, color 0.5s ease;
         }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Loading Screen */
+        
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--body-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-container {
+            text-align: center;
+        }
+        
+        .logo-loader {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            position: relative;
+            border-radius: 50%;
+            background: var(--card-bg);
+            box-shadow: var(--neumorphic);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        .logo-loader img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .loading-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-text::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: textLoading 1.5s infinite;
+        }
+        
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            animation: dotPulse 1.5s infinite ease-in-out;
+        }
+        
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes textLoading {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        @keyframes dotPulse {
+            0%,
+            100% {
+                transform: scale(0.8);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        /* Header & Navigation */
         
         header {
-            background: var(--primary);
-            color: #fff;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            position: sticky;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-        
-        .school-logo {
-            height: 40px;
-            border-radius: 6px;
-            object-fit: contain;
-        }
-        
-        .brand {
+            height: 80px;
             display: flex;
             align-items: center;
-            gap: 0.7rem;
-            font-weight: 700;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
-            user-select: none;
+            padding: 0 30px;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--glass-border);
         }
         
-        nav {
+        .nav-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            transition: max-height 0.3s ease;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
         
-        nav a {
-            color: #fff;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            font-family: 'Poppins', sans-serif;
             text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 1rem;
-            transition: background 0.3s ease;
+            letter-spacing: -0.5px;
         }
         
-        nav a:hover,
-        nav a.active {
-            background: var(--secondary);
-            color: #0a3d2e;
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         
-        .logout-btn {
-            background: #e74c3c;
-            color: #fff;
-            border: none;
-            border-radius: 2rem;
-            padding: 0.5rem 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
+        .header-controls {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: background var(--transition);
+            gap: 15px;
         }
         
-        .logout-btn:hover {
-            background: #c0392b;
-        }
-        
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            width: 30px;
-            height: 24px;
+        .theme-toggle {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            font-size: 1.4rem;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
         }
         
-        .hamburger div {
-            background: #fff;
-            height: 3px;
-            border-radius: 3px;
-            transition: all 0.3s ease;
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: var(--neumorphic-inset);
         }
         
-        .hamburger.active div:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
+        .menu-toggle {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
         }
         
-        .hamburger.active div:nth-child(2) {
+        .menu-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: var(--neumorphic-inset);
+        }
+        /* Right Sidebar Navigation */
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            z-index: 1100;
+            overflow-y: auto;
+            transition: var(--transition);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+            padding: 100px 30px 40px;
+            border-left: 1px solid var(--glass-border);
             opacity: 0;
+            visibility: hidden;
         }
         
-        .hamburger.active div:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
+        .sidebar.open {
+            right: 0;
+            opacity: 1;
+            visibility: visible;
         }
         
-        main {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+        .close-sidebar {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
         }
         
-        .welcome-card {
-            background: #ffffff;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
+        .close-sidebar:hover {
+            transform: rotate(90deg);
+            box-shadow: var(--neumorphic-inset);
         }
         
-        .welcome-card h2 {
-            font-size: 2rem;
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 18px 25px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: var(--transition);
+            background: var(--card-bg);
+            box-shadow: var(--neumorphic);
+        }
+        
+        .nav-links a i {
+            width: 25px;
+            font-size: 1.3rem;
             color: var(--primary);
         }
         
-        .welcome-card p {
-            color: var(--muted);
-            font-size: 1.1rem;
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-10px);
         }
         
-        .modules {
+        .nav-links a:hover i,
+        .nav-links a.active i {
+            color: white;
+        }
+        
+        .logout-btn-sidebar {
+            margin-top: 30px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
+            width: 100%;
+            justify-content: flex-start;
+        }
+        
+        .logout-btn-sidebar:hover {
+            background: #c53030;
+            transform: translateX(-10px);
+        }
+        /* Dashboard Hero */
+        
+        .dashboard-hero {
+            position: relative;
+            padding: 100px 0 80px;
+            text-align: center;
+            margin-bottom: 40px;
+            border-radius: 0 0 40px 40px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .dashboard-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .welcome-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .dashboard-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .dashboard-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 1.2s ease-out;
+        }
+        /* User Info */
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: fadeIn 1.4s ease-out;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .user-details h3 {
+            color: white;
+            font-size: 1.8rem;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 5px;
+        }
+        
+        .user-details p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin: 0;
+        }
+        /* Dashboard Cards Grid */
+        
+        .dashboard {
+            padding: 80px 0 100px;
+        }
+        
+        .section-header {
+            font-size: 2.8rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: var(--accent);
+            border-radius: 5px;
+        }
+        
+        .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
         }
         
         .module-card {
-            background: linear-gradient(135deg, #ffffff, #e3fbe8);
-            border-radius: var(--radius);
-            padding: 1.8rem;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(0, 128, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--neumorphic);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .module-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 179, 134, 0.25);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(16, 185, 129, 0.3);
         }
         
         .module-icon {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            transition: var(--transition);
+        }
+        
+        .module-card:hover .module-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .module-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .module-card h3 {
-            margin: 0.5rem 0;
-            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
         }
         
         .module-card p {
-            font-size: 1rem;
-            color: var(--muted);
-            margin-bottom: 1rem;
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            flex-grow: 1;
         }
         
         .module-btn {
-            background: var(--secondary);
-            color: #0a3d2e;
-            border: none;
-            padding: 0.5rem 1.3rem;
-            border-radius: 1.5rem;
+            padding: 15px 25px;
+            border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.1rem;
+            text-align: center;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: background 0.3s ease;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: var(--neumorphic);
+            background: var(--primary);
+            color: white;
+            margin-top: auto;
         }
         
         .module-btn:hover {
-            background: #98f5cc;
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+        }
+        
+        .module-btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .module-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        /* Stats Section */
+        
+        .stats {
+            padding: 80px 0;
+            margin-bottom: 40px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--neumorphic);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+        
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 2rem;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover .stat-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        /* Footer */
+        
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 80px 0 30px;
+            margin-top: 60px;
+            transition: var(--transition);
+            border-radius: 40px 40px 0 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 16px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(8px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+            font-size: 1.4rem;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-8px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            padding: 30px 15px 0;
+        }
+        /* Animations */
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 280px;
+            }
+            .dashboard-hero h1 {
+                font-size: 3rem;
+            }
+            .section-header {
+                font-size: 2.3rem;
+            }
+            .modules-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+            }
         }
         
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
+            .sidebar {
+                width: 280px;
             }
-            nav {
+            header {
+                padding: 0 20px;
+                height: 70px;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .logo img {
+                width: 40px;
+                height: 40px;
+            }
+            .theme-toggle,
+            .menu-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            .dashboard-hero {
+                padding: 80px 0 60px;
+            }
+            .dashboard-hero h1 {
+                font-size: 2.5rem;
+            }
+            .dashboard-hero p {
+                font-size: 1.1rem;
+            }
+            .user-info {
                 flex-direction: column;
-                width: 100%;
-                max-height: 0;
-                overflow: hidden;
-                background: var(--primary);
-                border-radius: 0 0 var(--radius) var(--radius);
+                text-align: center;
             }
-            nav.open {
-                max-height: 300px;
+            .section-header {
+                font-size: 2rem;
             }
-            nav a {
-                padding: 1rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            .module-icon {
+                height: 180px;
+                font-size: 3.5rem;
             }
-            .logout-btn {
-                width: 100%;
-                justify-content: center;
-                margin-top: 0.5rem;
+            .module-content {
+                padding: 25px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 280px;
+            }
+            .dashboard-hero {
+                padding: 70px 0 50px;
+            }
+            .dashboard-hero h1 {
+                font-size: 2rem;
+            }
+            .dashboard-hero p {
+                font-size: 1rem;
+            }
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-header {
+                font-size: 1.8rem;
+            }
+            .module-btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-links a {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-container">
+            <div class="logo-loader">
+                <img src="./assets/De-briliant-logo.png" alt="De-Brilliant Logo">
+            </div>
+            <div class="loading-text">DE-BRILLIANT HOUSE ACADEMY</div>
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
     <header>
-        <div class="brand">
-            <img src="brillo.jpg" alt="School Logo" class="school-logo" /> De-Brilliant House Academy
+        <div class="nav-container container">
+            <a href="index.html" class="logo">
+                <img src="./assets/De-briliant-logo.png" alt="De-Brilliant Logo">
+                <span>DE-BRILLIANT HOUSE ACADEMY</span>
+            </a>
+
+            <div class="header-controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
-
-        <div class="hamburger" id="hamburger" aria-label="Toggle menu" tabindex="0" role="button">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-
-        <nav id="navMenu">
-            <a href="dashboard.html" class="active">Dashboard</a>
-            <a href="reports.html">Reports</a>
-            <a href="quizzes.html">Quizzes</a>
-            <a href="homework.html">Homework</a>
-            <a href="/tutor.html">Find a tutor</a>
-        </nav>
-
-        <button class="logout-btn" id="logoutBtn">
-      <i class="fa-solid fa-sign-out-alt"></i> Logout
-    </button>
     </header>
 
-    <main>
-        <section class="welcome-card">
-            <h2>Welcome, <span id="user-name">Parent</span>!</h2>
-            <p>Manage your child's learning, view progress, take quizzes, and submit homework all in one place.</p>
-        </section>
-
-        <section class="modules">
-            <article class="module-card" onclick="window.location.href='parent-portal.html'">
-                <div class="module-icon"><i class="fa-solid fa-user-shield"></i></div>
-                <h3>Parent Communication Portal</h3>
-                <p>View weekly reports, messages, and give feedback to tutors.</p>
-                <button class="module-btn" onclick="event.stopPropagation(); window.open('https://wa.me/?text=Hello%20Tutor%2C%20I%20have%20feedback%20regarding%20my%20child.', '_blank');">
-          <i class="fa-brands fa-whatsapp"></i> Give Feedback
+    <!-- Right Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <button class="close-sidebar" id="closeSidebar">
+            <i class="fas fa-times"></i>
         </button>
-            </article>
-
-            <article class="module-card" onclick="window.location.href='tutorupload.html'">
-                <div class="module-icon"><i class="fa-solid fa-upload"></i></div>
-                <h3>Tutor Upload Portal</h3>
-                <p>Upload weekly performance reports or general messages for parents.</p>
-                <button class="module-btn" onclick="event.stopPropagation(); window.location.href='tutorupload.html';">
-          <i class="fa-solid fa-paper-plane"></i> Upload
+        <div class="logo" style="color: var(--primary-dark); padding: 0 15px;">
+            <img src="./assets/De-briliant-logo.png" width="50px" height="50px" style="border-radius:50%; object-fit:cover;">
+            <span>Dashboard Menu</span>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="parent-portal.html"><i class="fas fa-user-shield"></i> Parent Portal</a>
+            <a href="tutorupload.html"><i class="fas fa-upload"></i> Tutor Upload</a>
+            <a href="quizzes.html"><i class="fas fa-clipboard-question"></i> Quizzes</a>
+            <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
+            <a href="/tutor.html"><i class="fas fa-chalkboard-teacher"></i> Find Tutors</a>
+            <a href="reports.html"><i class="fas fa-chart-line"></i> Reports</a>
+        </div>
+        <button class="logout-btn-sidebar" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> Logout
         </button>
-            </article>
+    </div>
 
-            <article class="module-card" onclick="window.location.href='quizzes.html'">
-                <div class="module-icon"><i class="fa-solid fa-clipboard-question"></i></div>
-                <h3>Online Quiz & Assessment</h3>
-                <p>Take interactive quizzes and view instant results.</p>
-                <button class="module-btn" onclick="event.stopPropagation(); window.location.href='quizzes.html';">
-          <i class="fa-solid fa-play"></i> Start Quiz
-        </button>
-            </article>
+    <!-- Dashboard Hero -->
+    <section class="dashboard-hero">
+        <div class="container">
+            <div class="dashboard-hero-content">
+                <div class="welcome-text">Welcome Back!</div>
+                <h1>Your Learning Dashboard</h1>
+                <p>Track progress, access learning materials, submit assignments, and communicate with tutors - all in one place.</p>
 
-            <article class="module-card" onclick="window.location.href='homework.html'">
-                <div class="module-icon"><i class="fa-solid fa-book-open"></i></div>
-                <h3>Homework Submission Portal</h3>
-                <p>View assignments, upload homework, and receive tutor feedback.</p>
-                <button class="module-btn" onclick="event.stopPropagation(); window.location.href='homework.html';">
-          <i class="fa-solid fa-upload"></i> Submit Homework
-        </button>
-            </article>
-        </section>
-    </main>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">P</div>
+                    <div class="user-details">
+                        <h3 id="userName">Parent / Student</h3>
+                        <p>DE-BRILLIANT HOUSE ACADEMY Member</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <h2 class="section-header">Your Learning Stats</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-number" id="coursesCompleted">0</div>
+                    <div class="stat-label">Courses Completed</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-number" id="assignmentsSubmitted">0</div>
+                    <div class="stat-label">Assignments Submitted</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-number" id="averageScore">0%</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number" id="learningHours">0</div>
+                    <div class="stat-label">Learning Hours</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Modules -->
+    <section class="dashboard">
+        <div class="container">
+            <h2 class="section-header">Learning Modules</h2>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Parent Communication Portal</h3>
+                        <p>View weekly performance reports, communicate with tutors, and provide feedback on your child's progress. Access detailed analytics and progress tracking.</p>
+                        <button class="module-btn" onclick="window.location.href='parent-portal.html'">
+                            <i class="fas fa-external-link-alt"></i> Access Portal
+                        </button>
+                    </div>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Tutor Upload Portal</h3>
+                        <p>Upload weekly performance reports, learning materials, and communicate with parents. Manage student progress and provide personalized feedback.</p>
+                        <button class="module-btn" onclick="window.location.href='tutorupload.html'">
+                            <i class="fas fa-paper-plane"></i> Upload Materials
+                        </button>
+                    </div>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-clipboard-question"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Online Quiz & Assessment</h3>
+                        <p>Take interactive quizzes across various subjects. Get instant results, detailed explanations, and track your improvement over time.</p>
+                        <button class="module-btn" onclick="window.location.href='quizzes.html'">
+                            <i class="fas fa-play"></i> Start Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Homework Submission</h3>
+                        <p>View assignments, upload completed homework, and receive tutor feedback. Track submission deadlines and view grading history.</p>
+                        <button class="module-btn" onclick="window.location.href='homework.html'">
+                            <i class="fas fa-upload"></i> Submit Homework
+                        </button>
+                    </div>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Find a Tutor</h3>
+                        <p>Connect with qualified tutors for personalized learning sessions. Browse profiles, check availability, and schedule one-on-one sessions.</p>
+                        <button class="module-btn module-btn-secondary" onclick="window.location.href='/tutor.html'">
+                            <i class="fas fa-search"></i> Browse Tutors
+                        </button>
+                    </div>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="module-content">
+                        <h3>Progress Reports</h3>
+                        <p>Access detailed progress reports, performance analytics, and learning insights. Track improvements and identify areas for growth.</p>
+                        <button class="module-btn module-btn-secondary" onclick="window.location.href='reports.html'">
+                            <i class="fas fa-chart-bar"></i> View Reports
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="logo" style="color: white; margin-bottom: 20px;">
+                        <span>DE-BRILLIANT HOUSE ACADEMY</span>
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.85); margin-bottom: 20px;">
+                        We believe every child deserves the best start in life. With quality teaching and a focus on all-round growth, we help students discover their potential and build a bright future.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/de_brilliant_academy" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://web.facebook.com/profile.php?id=100090091698670" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="dashboard.html"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+                        <li><a href="parent-portal.html"><i class="fas fa-chevron-right"></i> Parent Portal</a></li>
+                        <li><a href="quizzes.html"><i class="fas fa-chevron-right"></i> Quizzes</a></li>
+                        <li><a href="homework.html"><i class="fas fa-chevron-right"></i> Homework</a></li>
+                        <li><a href="/tutor.html"><i class="fas fa-chevron-right"></i> Find Tutors</a></li>
+                        <li><a href="reports.html"><i class="fas fa-chevron-right"></i> Reports</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Epe, Lagos, Nigeria</a></li>
+                        <li><a href="tel:+2349037112132"><i class="fas fa-phone"></i> +234 903 711 2132</a></li>
+                        <li><a href="mailto:debrilliantacademy@gmail.com"><i class="fas fa-envelope"></i> debrilliantacademy@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2025 DE-BRILLIANT HOUSE ACADEMY. All rights reserved. <br><br>
+                <strong>Student & Parent Dashboard v2.0</strong>
+            </div>
+        </div>
+    </footer>
 
     <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    loadingScreen.remove();
+                }, 500);
+            }, 1500);
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Sidebar Navigation
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const body = document.body;
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            body.classList.add('sidebar-open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            body.classList.remove('sidebar-open');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                if (sidebar.classList.contains('open') &&
+                    !sidebar.contains(e.target) &&
+                    !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                    body.classList.remove('sidebar-open');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+
+        // Close sidebar when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                body.classList.remove('sidebar-open');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close sidebar when resizing to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992 && sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                body.classList.remove('sidebar-open');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // User Data Management
         document.addEventListener("DOMContentLoaded", () => {
             // Get the stored username or default to "User"
-            const storedName = localStorage.getItem("userName") || "User";
+            const storedName = localStorage.getItem("userName") || "Parent";
+            const userInitial = storedName.charAt(0).toUpperCase();
 
-            // Display the username in the dashboard
-            document.getElementById("user-name").textContent = storedName;
+            // Display user info
+            document.getElementById("userName").textContent = storedName;
+            document.getElementById("userAvatar").textContent = userInitial;
+            document.getElementById("userAvatar").style.background = `linear-gradient(135deg, ${getRandomColor()}, ${getRandomColor()})`;
 
-            // Hamburger menu toggle
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('navMenu');
-
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('open');
-            });
-
-            hamburger.addEventListener('keydown', e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    hamburger.click();
-                }
-            });
+            // Generate random stats for demonstration
+            generateStats();
 
             // Logout button logic
             document.getElementById("logoutBtn").addEventListener("click", () => {
-                if (confirm("Are you sure you want to logout?")) {
-                    localStorage.removeItem("userName");
-                    alert("Logged out successfully.");
-                    window.location.href = "/login.html"; // Redirect to login page
-                }
+                showLogoutConfirmation();
             });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') !== '#') {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Animation on scroll
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.module-card, .stat-card');
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    if (elementPosition < screenPosition) {
+                        element.style.animation = 'fadeIn 0.8s ease-out forwards';
+                    }
+                });
+            };
+
+            // Initialize animations
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
         });
+
+        // Helper Functions
+        function getRandomColor() {
+            const colors = ['#10B981', '#34D399', '#047857', '#6EE7B7', '#059669'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function generateStats() {
+            // Generate random stats for demonstration
+            const coursesCompleted = Math.floor(Math.random() * 15) + 5;
+            const assignmentsSubmitted = Math.floor(Math.random() * 50) + 20;
+            const averageScore = Math.floor(Math.random() * 40) + 60;
+            const learningHours = Math.floor(Math.random() * 100) + 50;
+
+            document.getElementById('coursesCompleted').textContent = coursesCompleted;
+            document.getElementById('assignmentsSubmitted').textContent = assignmentsSubmitted;
+            document.getElementById('averageScore').textContent = `${averageScore}%`;
+            document.getElementById('learningHours').textContent = learningHours;
+        }
+
+        function showLogoutConfirmation() {
+            // Create modal for logout confirmation
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+                backdrop-filter: blur(5px);
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: var(--card-bg);
+                    padding: 40px;
+                    border-radius: 25px;
+                    max-width: 400px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: var(--shadow);
+                    border: 1px solid var(--border-color);
+                ">
+                    <div style="font-size: 4rem; color: var(--danger); margin-bottom: 20px;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <h3 style="font-family: 'Poppins', sans-serif; margin-bottom: 15px; color: var(--text-color);">
+                        Confirm Logout
+                    </h3>
+                    <p style="color: var(--gray); margin-bottom: 30px;">
+                        Are you sure you want to logout? You'll need to sign in again to access the dashboard.
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <button id="cancelLogout" style="
+                            padding: 12px 30px;
+                            border-radius: 15px;
+                            border: 2px solid var(--primary);
+                            background: transparent;
+                            color: var(--primary);
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: var(--transition);
+                        ">Cancel</button>
+                        <button id="confirmLogout" style="
+                            padding: 12px 30px;
+                            border-radius: 15px;
+                            border: none;
+                            background: var(--danger);
+                            color: white;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: var(--transition);
+                        ">Logout</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Handle button clicks
+            document.getElementById('cancelLogout').addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+
+            document.getElementById('confirmLogout').addEventListener('click', () => {
+                localStorage.removeItem("userName");
+
+                // Show success message
+                const successMsg = document.createElement('div');
+                successMsg.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--success);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 15px;
+                    z-index: 3000;
+                    animation: slideIn 0.5s ease;
+                `;
+                successMsg.innerHTML = `
+                    <i class="fas fa-check-circle"></i> Logged out successfully!
+                `;
+                document.body.appendChild(successMsg);
+
+                // Redirect after delay
+                setTimeout(() => {
+                    window.location.href = "/login.html";
+                }, 1500);
+            });
+        }
     </script>
+</body>
+
+</html>
