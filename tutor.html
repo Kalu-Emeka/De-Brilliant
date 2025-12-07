@@ -82,7 +82,27 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-        /* Header & Navigation */
+        
+        .viewer-count-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .viewer-count-badge i {
+            color: var(--accent);
+        }
         
         header {
             background: var(--glass-bg);
@@ -180,7 +200,6 @@
             transform: scale(1.05);
             box-shadow: var(--neumorphic-inset);
         }
-        /* Sidebar */
         
         .sidebar {
             position: fixed;
@@ -312,7 +331,6 @@
             color: white;
             transform: translateY(-5px);
         }
-        /* Hero Section */
         
         .hero {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -385,7 +403,6 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(255, 255, 255, 0.4);
         }
-        /* Features Section */
         
         .features {
             padding: 70px 0;
@@ -486,7 +503,6 @@
             transition: var(--transition);
             font-size: 1.05rem;
         }
-        /* Booking Section */
         
         .booking {
             padding: 70px 0;
@@ -596,7 +612,6 @@
             font-weight: 600;
             margin-top: 15px;
         }
-        /* Live Class Section */
         
         .live-class {
             padding: 70px 0;
@@ -654,6 +669,7 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
+            position: relative;
         }
         
         .youtube-embed iframe {
@@ -662,7 +678,6 @@
             height: 350px;
             border: none;
         }
-        /* Tutors Section */
         
         .tutors {
             padding: 70px 0;
@@ -685,6 +700,7 @@
             animation: fadeIn 0.8s ease-out;
             border: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
+            position: relative;
         }
         
         .tutor-card:hover {
@@ -728,7 +744,22 @@
             margin-bottom: 20px;
             font-size: 1.2rem;
         }
-        /* About Section */
+        
+        .tutor-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--success);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tutor-status.unavailable {
+            background: var(--danger);
+        }
         
         .about {
             padding: 90px 0;
@@ -812,7 +843,6 @@
             animation: float 6s ease-in-out infinite;
             border: 1px solid var(--border-color);
         }
-        /* Contact Section */
         
         .contact {
             padding: 90px 0;
@@ -920,7 +950,6 @@
             box-shadow: var(--neumorphic);
             border: 1px solid var(--border-color);
         }
-        /* Footer */
         
         footer {
             background: var(--footer-bg);
@@ -1011,7 +1040,6 @@
             font-size: 1rem;
             padding: 30px 15px 0;
         }
-        /* WhatsApp Notification */
         
         .whatsapp-notification {
             position: fixed;
@@ -1053,7 +1081,6 @@
             top: 10px;
             right: 15px;
         }
-        /* Animations */
         
         @keyframes fadeIn {
             from {
@@ -1118,146 +1145,6 @@
             }
             to {
                 transform: translateX(0);
-            }
-        }
-        /* Responsive Design */
-        
-        @media (max-width: 767px) {
-            /* Mobile-specific adjustments */
-            header {
-                padding: 0 15px;
-                height: 70px;
-            }
-            .logo {
-                font-size: 1.2rem;
-            }
-            .logo i {
-                width: 40px;
-                height: 40px;
-                font-size: 1.5rem;
-            }
-            .theme-toggle,
-            .menu-toggle {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-            .hero {
-                padding: 80px 0 100px;
-            }
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-            .btn {
-                padding: 14px 20px;
-                font-size: 1rem;
-            }
-            .section-title h2 {
-                font-size: 2rem;
-            }
-            .section-title p {
-                font-size: 1rem;
-            }
-            .booking-form,
-            .contact-form {
-                padding: 25px;
-            }
-            .form-title {
-                font-size: 1.8rem;
-            }
-            .feature-card,
-            .tutor-card,
-            .stat-card,
-            .info-card {
-                padding: 25px 20px;
-            }
-            .feature-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 2rem;
-            }
-            .feature-card h3 {
-                font-size: 1.4rem;
-            }
-            .about-image {
-                height: 300px;
-            }
-            .map-container {
-                height: 250px;
-            }
-            .youtube-embed iframe {
-                height: 250px;
-            }
-            .whatsapp-notification {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-                max-width: none;
-            }
-        }
-        
-        @media (min-width: 576px) {
-            .features-grid,
-            .tutors-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .booking-image {
-                height: 350px;
-            }
-            .about-stats {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .form-row {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 768px) {
-            .hero {
-                padding: 120px 0 140px;
-            }
-            .hero h1 {
-                font-size: 4rem;
-            }
-            .features-grid,
-            .tutors-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .booking-container,
-            .live-class-container,
-            .about-container,
-            .contact-container {
-                grid-template-columns: 1fr 1fr;
-            }
-            .booking-image {
-                height: 100%;
-            }
-            .tutors-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 992px) {
-            .hero {
-                padding: 140px 0 160px;
-            }
-            .hero h1 {
-                font-size: 4.5rem;
-            }
-            .features-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .tutors-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .footer-grid {
-                grid-template-columns: repeat(4, 1fr);
             }
         }
         
@@ -1392,20 +1279,153 @@
             }
         }
         
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
+        @media (max-width: 767px) {
+            header {
+                padding: 0 15px;
+                height: 70px;
             }
-            50% {
-                transform: scale(1.05);
+            .logo {
+                font-size: 1.2rem;
+            }
+            .logo i {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+            .theme-toggle,
+            .menu-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            .hero {
+                padding: 80px 0 100px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .section-title p {
+                font-size: 1rem;
+            }
+            .booking-form,
+            .contact-form {
+                padding: 25px;
+            }
+            .form-title {
+                font-size: 1.8rem;
+            }
+            .feature-card,
+            .tutor-card,
+            .stat-card,
+            .info-card {
+                padding: 25px 20px;
+            }
+            .feature-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            .feature-card h3 {
+                font-size: 1.4rem;
+            }
+            .about-image {
+                height: 300px;
+            }
+            .map-container {
+                height: 250px;
+            }
+            .youtube-embed iframe {
+                height: 250px;
+            }
+            .whatsapp-notification {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
+            }
+            .viewer-count-badge {
+                top: 10px;
+                right: 10px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (min-width: 576px) {
+            .features-grid,
+            .tutors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .booking-image {
+                height: 350px;
+            }
+            .about-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .hero {
+                padding: 120px 0 140px;
+            }
+            .hero h1 {
+                font-size: 4rem;
+            }
+            .features-grid,
+            .tutors-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .booking-container,
+            .live-class-container,
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .booking-image {
+                height: 100%;
+            }
+            .tutors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .hero {
+                padding: 140px 0 160px;
+            }
+            .hero h1 {
+                font-size: 4.5rem;
+            }
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .tutors-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loader-container">
             <div class="logo-loader">
@@ -1419,12 +1439,11 @@
             </div>
         </div>
     </div>
-    <!-- Header & Navigation -->
+
     <header>
         <div class="mobile-header">
             <a href="#" class="logo">
                 <img src="assets/De-briliant-logo.png" width="50px" height="50px" style="border-radius:50%; object-fit:cover;">
-
                 <span>TutorConnect</span>
             </a>
             <div class="header-controls">
@@ -1438,14 +1457,12 @@
         </div>
     </header>
 
-    <!-- Sidebar Navigation -->
     <div class="sidebar" id="sidebar">
         <button class="close-sidebar" id="closeSidebar">
             <i class="fas fa-times"></i>
         </button>
         <div class="logo" style="color: var(--primary-dark); padding: 0 15px;">
             <img src="assets/De-briliant-logo.jpg" width="50px" height="50px" style="border-radius:50%; object-fit:cover;">
-
             <span>De-Brilliant TutorConnect</span>
         </div>
         <div class="nav-links">
@@ -1458,21 +1475,14 @@
         </div>
         <div class="sidebar-cta">
             <a href="admin.html" style="text-decoration:none;"><button class="btn btn-primary">
-                <i class="fas fa-sign-in-alt"></i> Tutor Login
+                <i class="fas fa-sign-in-alt"></i> Admin Login
             </button></a>
             <button class="btn btn-outline">
                 <i class="fas fa-user-plus"></i> Student Sign Up
             </button>
-            <a href="/index.html" style="text-decoration:none;"><button class="btn btn-primary">
-                <i class="fas fa-sign-in-alt"></i> group1
-            </button></a>
-            <a href="/De-brilliant-acadademy-main_part2/index.html" style="text-decoration:none;"><button class="btn btn-primary">
-                <i class="fas fa-sign-in-alt"></i> group2
-            </button></a>
         </div>
     </div>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -1481,21 +1491,19 @@
                 <div class="hero-buttons">
                     <a href="#tutors" style="text-decoration:none;">
                         <button class="btn btn-light">
-            <i class="fas fa-search"></i> Find a Tutor
-        </button>
+                            <i class="fas fa-search"></i> Find a Tutor
+                        </button>
                     </a>
                     <a href="#live-class" style="text-decoration:none;">
                         <button class="btn btn-outline">
-            <i class="fas fa-chalkboard"></i> Join a Class
-        </button>
+                            <i class="fas fa-chalkboard"></i> Join a Class
+                        </button>
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
     <section class="features">
         <div class="container">
             <div class="section-title">
@@ -1528,7 +1536,6 @@
         </div>
     </section>
 
-    <!-- Booking Section -->
     <section class="booking" id="booking">
         <div class="container">
             <div class="section-title">
@@ -1566,11 +1573,6 @@
                             <label for="tutor">Preferred Tutor</label>
                             <select id="tutor" class="form-control" required>
                                 <option value="">Select a tutor</option>
-                                <option value="john">John Smith (Mathematics)</option>
-                                <option value="sarah">Sarah Johnson (Science)</option>
-                                <option value="mike">Mike Davis (English)</option>
-                                <option value="lisa">Lisa Chen (History)</option>
-                                <option value="david">David Brown (Programming)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1586,7 +1588,6 @@
         </div>
     </section>
 
-    <!-- Live Class Section -->
     <section class="live-class" id="live-class">
         <div class="container">
             <div class="section-title">
@@ -1597,7 +1598,6 @@
                 <div class="class-info">
                     <h2>Engaging Virtual Learning</h2>
                     <p>Our live class platform brings the classroom experience to your home with interactive tools designed for engagement and collaboration.</p>
-
                     <ul class="class-features">
                         <li>
                             <i class="fas fa-video"></i>
@@ -1607,26 +1607,16 @@
                             <i class="fas fa-share-alt"></i>
                             <span>Interactive Classroom</span>
                         </li>
-                        <!-- <li>
-                            <i class="fas fa-lock"></i>
-                            <span>Secure classroom access with unique session IDs</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-comments"></i>
-                            <span>Chat functionality for questions and discussions</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-record-vinyl"></i>
-                            <span>Session recording for later review</span>
-                        </li> -->
                     </ul>
-
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" id="joinLiveClass">
                         <i class="fas fa-door-open"></i> Join a Live Class
                     </button>
                 </div>
-
                 <div class="youtube-embed">
+                    <div class="viewer-count-badge" id="viewerCountBadge">
+                        <i class="fas fa-eye"></i>
+                        <span id="liveViewerCount">0</span> watching
+                    </div>
                     <iframe id="liveClassVideo" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
                     </iframe>
                 </div>
@@ -1634,87 +1624,17 @@
         </div>
     </section>
 
-    <!-- Tutors Section -->
     <section class="tutors" id="tutors">
         <div class="container">
             <div class="section-title">
                 <h2>Our Expert Tutors</h2>
                 <p>Meet our team of qualified and experienced tutors ready to help you succeed</p>
             </div>
-            <div class="tutors-grid">
-                <div class="tutor-card">
-                    <div class="tutor-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="tutor-info">
-                        <h3>John Smith</h3>
-                        <div class="tutor-subject">Mathematics</div>
-                        <div class="tutor-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i> 4.8
-                        </div>
-                        <p>8 years experience, PhD in Mathematics</p>
-                    </div>
-                </div>
-                <div class="tutor-card">
-                    <div class="tutor-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="tutor-info">
-                        <h3>Sarah Johnson</h3>
-                        <div class="tutor-subject">Science</div>
-                        <div class="tutor-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i> 5.0
-                        </div>
-                        <p>Research scientist with 6 years teaching</p>
-                    </div>
-                </div>
-                <div class="tutor-card">
-                    <div class="tutor-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="tutor-info">
-                        <h3>Mike Davis</h3>
-                        <div class="tutor-subject">English</div>
-                        <div class="tutor-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i> 4.2
-                        </div>
-                        <p>Published author and language specialist</p>
-                    </div>
-                </div>
-                <div class="tutor-card">
-                    <div class="tutor-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="tutor-info">
-                        <h3>Lisa Chen</h3>
-                        <div class="tutor-subject">History</div>
-                        <div class="tutor-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i> 4.7
-                        </div>
-                        <p>Historian passionate about engaging lessons</p>
-                    </div>
-                </div>
+            <div class="tutors-grid" id="tutorsGrid">
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
     <section class="about" id="about">
         <div class="container">
             <div class="section-title">
@@ -1728,10 +1648,9 @@
                     <p>Our platform connects students with expert tutors in various subjects, providing flexible learning options that fit into busy schedules. Whether you need help with a specific subject, test preparation, or want to learn a new skill,
                         we've got you covered.</p>
                     <p>We carefully vet all our tutors to ensure they have the expertise, teaching skills, and passion needed to help students succeed. Our innovative virtual classroom technology makes online learning as effective as in-person sessions.</p>
-
                     <div class="about-stats">
                         <div class="stat-card">
-                            <div class="stat-number">500+</div>
+                            <div class="stat-number" id="tutorCount">0</div>
                             <div class="stat-text">Expert Tutors</div>
                         </div>
                         <div class="stat-card">
@@ -1758,7 +1677,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
             <div class="section-title">
@@ -1823,7 +1741,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -1831,10 +1748,7 @@
                     <h3>De-Brilliant TutorConnect</h3>
                     <p>Transforming education through personalized online tutoring and interactive live classes.</p>
                     <div class="social-links">
-                        <!-- <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a> -->
                         <a href="https://www.instagram.com/de_brilliant_academy?igsh=eDZmNTFuMGQ2b2c="><i class="fab fa-instagram"></i></a>
-                        <!-- <a href="#"><i class="fab fa-linkedin-in"></i></a> -->
                     </div>
                 </div>
                 <div class="footer-column">
@@ -1873,7 +1787,6 @@
         </div>
     </footer>
 
-    <!-- WhatsApp Notification -->
     <div class="whatsapp-notification hidden" id="whatsappNotification">
         <div class="whatsapp-icon">
             <i class="fab fa-whatsapp"></i>
@@ -1887,12 +1800,40 @@
         </button>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
     <script>
-        // Toggle sidebar
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlKnj9YWGheKPeA8MSUQxJWC-8xRVxTwo",
+            authDomain: "netcentric-94476.firebaseapp.com",
+            projectId: "netcentric-94476",
+            storageBucket: "netcentric-94476.appspot.com",
+            messagingSenderId: "203392644028",
+            appId: "1:203392644028:web:d028c79992b55e0ba631b9"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
         const menuToggle = document.getElementById('menuToggle');
         const closeSidebar = document.getElementById('closeSidebar');
         const sidebar = document.getElementById('sidebar');
         const body = document.body;
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const bookingForm = document.getElementById('bookingForm');
+        const tutorsGrid = document.getElementById('tutorsGrid');
+        const tutorSelect = document.getElementById('tutor');
+        const tutorCountElement = document.getElementById('tutorCount');
+        const liveViewerCount = document.getElementById('liveViewerCount');
+        const joinLiveClassBtn = document.getElementById('joinLiveClass');
+
+        const viewerId = 'viewer_' + Math.random().toString(36).substr(2, 9);
+        let viewerInterval;
+        let viewerCleanupInterval;
 
         menuToggle.addEventListener('click', () => {
             sidebar.classList.add('open');
@@ -1904,7 +1845,6 @@
             body.classList.remove('sidebar-open');
         });
 
-        // Close sidebar when clicking outside
         document.addEventListener('click', (e) => {
             if (sidebar.classList.contains('open') &&
                 !sidebar.contains(e.target) &&
@@ -1914,11 +1854,6 @@
             }
         });
 
-        // Dark mode toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-
-        // Check for saved theme preference
         if (localStorage.getItem('darkMode') === 'enabled') {
             document.body.classList.add('dark-mode');
             themeIcon.classList.remove('fa-moon');
@@ -1939,67 +1874,246 @@
             }
         });
 
-        // WhatsApp Integration
-        const bookingForm = document.getElementById('bookingForm');
+        function loadTutors() {
+            console.log("Loading tutors...");
+
+            db.collection("tutors")
+                .onSnapshot((querySnapshot) => {
+                    console.log("Tutors data received:", querySnapshot.size, "tutors");
+
+                    const tutors = [];
+                    tutorsGrid.innerHTML = '';
+                    tutorSelect.innerHTML = '<option value="">Select a tutor</option>';
+
+                    querySnapshot.forEach((doc) => {
+                        const tutorData = doc.data();
+                        console.log("Tutor data:", tutorData);
+
+                        const tutor = {
+                            id: doc.id,
+                            name: tutorData.name || 'No Name',
+                            subject: tutorData.subject || 'No Subject',
+                            rating: tutorData.rating || 0,
+                            experience: tutorData.experience || '',
+                            description: tutorData.description || '',
+                            status: tutorData.status || 'inactive',
+                            available: tutorData.available !== false
+                        };
+
+                        tutors.push(tutor);
+
+                        const tutorCard = createTutorCard(tutor);
+                        tutorsGrid.appendChild(tutorCard);
+
+                        if (tutor.status === 'active') {
+                            const option = document.createElement('option');
+                            option.value = tutor.id;
+                            option.textContent = `${tutor.name} (${tutor.subject})`;
+                            tutorSelect.appendChild(option);
+                        }
+                    });
+
+                    const activeTutors = tutors.filter(t => t.status === 'active');
+                    tutorCountElement.textContent = activeTutors.length;
+                    console.log("Active tutors count:", activeTutors.length);
+
+                    if (tutors.length === 0) {
+                        tutorsGrid.innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                                <i class="fas fa-users-slash" style="font-size: 3rem; color: var(--gray); margin-bottom: 20px;"></i>
+                                <h3 style="color: var(--gray);">No tutors available at the moment</h3>
+                                <p>Please check back later or contact us for more information.</p>
+                            </div>
+                        `;
+                    }
+                }, (error) => {
+                    console.error("Error loading tutors:", error);
+                    tutorsGrid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--danger);">
+                            <h3>Error loading tutors</h3>
+                            <p>${error.message}</p>
+                            <button onclick="loadTutors()" class="btn btn-primary" style="margin-top: 20px;">
+                                <i class="fas fa-redo"></i> Retry
+                            </button>
+                        </div>
+                    `;
+                });
+        }
+
+        function createTutorCard(tutor) {
+            const card = document.createElement('div');
+            card.className = 'tutor-card';
+            card.innerHTML = `
+                <div class="tutor-image">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="tutor-info">
+                    <h3>${tutor.name}</h3>
+                    <div class="tutor-subject">${tutor.subject}</div>
+                    <div class="tutor-rating">
+                        ${generateStarRating(tutor.rating)}
+                        <span style="margin-left: 8px; color: var(--gray);">${tutor.rating}</span>
+                    </div>
+                    <p>${tutor.description}</p>
+                    ${tutor.experience ? `<p><small>${tutor.experience}</small></p>` : ''}
+                </div>
+                ${tutor.status === 'active' && tutor.available ? 
+                    '<div class="tutor-status">Available</div>' : 
+                    '<div class="tutor-status unavailable">Unavailable</div>'}
+            `;
+            return card;
+        }
+
+        function generateStarRating(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            
+            for (let i = 0; i < 5; i++) {
+                if (i < fullStars) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === fullStars && halfStar) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        function startViewerTracking() {
+            registerViewer();
+            viewerInterval = setInterval(registerViewer, 20000);
+            
+            db.collection("viewers").onSnapshot((querySnapshot) => {
+                const now = Date.now();
+                let activeViewers = 0;
+                
+                querySnapshot.forEach((doc) => {
+                    const viewer = doc.data();
+                    if (viewer.lastSeen && now - viewer.lastSeen.toMillis() < 30000) {
+                        activeViewers++;
+                    }
+                });
+                
+                liveViewerCount.textContent = activeViewers;
+            });
+            
+            viewerCleanupInterval = setInterval(cleanupOldViewers, 60000);
+        }
+
+        function registerViewer() {
+            db.collection("viewers").doc(viewerId).set({
+                lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+                userAgent: navigator.userAgent
+            }).catch(error => {
+                console.error("Error registering viewer:", error);
+            });
+        }
+
+        function cleanupOldViewers() {
+            const thirtySecondsAgo = new Date(Date.now() - 30000);
+            
+            db.collection("viewers")
+                .where("lastSeen", "<", thirtySecondsAgo)
+                .get()
+                .then((querySnapshot) => {
+                    const batch = db.batch();
+                    querySnapshot.forEach((doc) => {
+                        batch.delete(doc.ref);
+                    });
+                    return batch.commit();
+                })
+                .catch(error => {
+                    console.error("Error cleaning up viewers:", error);
+                });
+        }
+
+        db.collection("config").doc("liveClass").onSnapshot(
+            (doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const videoId = data.videoId;
+                    const iframe = document.getElementById('liveClassVideo');
+                    
+                    if (videoId && !iframe.src.includes(videoId)) {
+                        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0`;
+                        showVideoUpdatedNotification();
+                    }
+                }
+            },
+            (error) => {
+                console.error("Firestore error:", error);
+            }
+        );
+
+        function showVideoUpdatedNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'video-update-notification';
+            notification.innerHTML = `
+                <i class="fas fa-sync-alt"></i>
+                Live class video has been updated
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        }
+
+        joinLiveClassBtn.addEventListener('click', () => {
+            const iframe = document.getElementById('liveClassVideo');
+            const videoUrl = iframe.src.replace('autoplay=0', 'autoplay=1');
+            window.open(videoUrl, '_blank');
+        });
+
         const whatsappNotification = document.getElementById('whatsappNotification');
         const closeWhatsapp = document.getElementById('closeWhatsapp');
 
         bookingForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Get form values
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const subject = document.getElementById('subject').value;
-            const tutor = document.getElementById('tutor').value;
+            const tutorId = document.getElementById('tutor').value;
+            const tutorName = tutorSelect.options[tutorSelect.selectedIndex].text;
             const date = document.getElementById('date').value;
 
-            // Format date for display
             const formattedDate = new Date(date).toLocaleString();
 
-            // Create WhatsApp message
             const message = `New Tutoring Booking:
             
 Name: ${name}
 Email: ${email}
 Subject: ${subject}
-Tutor: ${tutor}
+Tutor: ${tutorName}
 Date & Time: ${formattedDate}
 
 Please confirm this booking.`;
 
-            // Encode message for URL
             const encodedMessage = encodeURIComponent(message);
-
-            // Your WhatsApp number (replace with actual number)
             const whatsappNumber = "2349037112132";
-
-            // Create WhatsApp URL
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-            // Open WhatsApp in new tab
             window.open(whatsappUrl, '_blank');
 
-            // Show notification
             whatsappNotification.classList.remove('hidden');
 
-            // Reset form
             bookingForm.reset();
         });
 
-        // Close WhatsApp notification
         closeWhatsapp.addEventListener('click', () => {
             whatsappNotification.classList.add('hidden');
         });
 
-        // Contact form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Message sent successfully! We will get back to you soon.');
             this.reset();
         });
 
-        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2011,7 +2125,6 @@ Please confirm this booking.`;
             });
         });
 
-        // Animation on scroll
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.feature-card, .tutor-card, .booking-form, .stat-card, .info-card');
             elements.forEach(element => {
@@ -2023,85 +2136,26 @@ Please confirm this booking.`;
             });
         };
 
-        // Initialize animations
-        animateOnScroll();
-        window.addEventListener('scroll', animateOnScroll);
-
-        // Floating animation for elements
-        const floatingElements = document.querySelectorAll('.feature-card, .tutor-card, .stat-card, .info-card');
-        floatingElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                el.style.transition = 'transform 0.5s ease';
-            });
-
-            el.addEventListener('mouseleave', () => {
-                el.style.transition = 'var(--transition)';
-            });
-        });
-    </script>
-    <!-- Firebase Integration -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script>
-        // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp({
-                apiKey: "AIzaSyBlKnj9YWGheKPeA8MSUQxJWC-8xRVxTwo",
-                authDomain: "netcentric-94476.firebaseapp.com",
-                projectId: "netcentric-94476",
-                storageBucket: "netcentric-94476.appspot.com",
-                messagingSenderId: "203392644028",
-                appId: "1:203392644028:web:d028c79992b55e0ba631b9"
-            });
-        }
-        const db = firebase.firestore();
-
-        // Real-time listener for video updates
-        db.collection("config").doc("liveClass").onSnapshot(
-            (doc) => {
-                if (doc.exists) {
-                    const videoId = doc.data().videoId;
-                    const iframe = document.getElementById('liveClassVideo');
-
-                    if (videoId && !iframe.src.includes(videoId)) {
-                        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0`;
-                        console.log("Video updated to:", videoId);
-                        showVideoUpdatedNotification();
-                    }
-                }
-            },
-            (error) => {
-                console.error("Firestore error:", error);
-            }
-        );
-
-        // Show video update notification
-        function showVideoUpdatedNotification() {
-            const notification = document.createElement('div');
-            notification.className = 'video-update-notification';
-            notification.innerHTML = `
-      <i class="fas fa-sync-alt"></i>
-      Live class video has been updated
-    `;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.classList.add('fade-out');
-                setTimeout(() => notification.remove(), 500);
-            }, 5000);
-        }
-        // Add this to your existing JavaScript
         window.addEventListener('load', function() {
-            // Wait for the page to fully load including all resources
             setTimeout(function() {
                 const loadingScreen = document.getElementById('loading-screen');
                 loadingScreen.classList.add('hidden');
-
-                // Remove the loading screen from DOM after fade out completes
                 setTimeout(() => {
                     loadingScreen.remove();
                 }, 500);
-            }, 1500); // Adjust this timeout if needed
+                
+                loadTutors();
+                startViewerTracking();
+                animateOnScroll();
+            }, 1500);
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+
+        window.addEventListener('beforeunload', () => {
+            db.collection("viewers").doc(viewerId).delete().catch(() => {});
+            if (viewerInterval) clearInterval(viewerInterval);
+            if (viewerCleanupInterval) clearInterval(viewerCleanupInterval);
         });
     </script>
 </body>
