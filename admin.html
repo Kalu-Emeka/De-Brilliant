@@ -82,7 +82,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
         }
-        /* Sidebar */
         
         .admin-sidebar {
             width: 300px;
@@ -172,7 +171,6 @@
         .stat-item:last-child {
             border-bottom: none;
         }
-        /* Main Content */
         
         .admin-main {
             flex: 1;
@@ -241,7 +239,6 @@
             color: white;
             font-weight: bold;
         }
-        /* Dashboard Content */
         
         .dashboard-grid {
             display: grid;
@@ -295,7 +292,6 @@
             font-size: 1.2rem;
             color: var(--gray);
         }
-        /* Form Sections */
         
         .form-section {
             background: var(--card-bg);
@@ -347,6 +343,11 @@
             box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
         }
         
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
         .btn {
             padding: 16px 30px;
             border-radius: 15px;
@@ -378,11 +379,77 @@
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5);
         }
         
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-5px);
+        }
+        
         .btn-block {
             display: block;
             width: 100%;
         }
-        /* Notification */
+        
+        .tutor-list {
+            margin-top: 30px;
+        }
+        
+        .tutor-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--neumorphic);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        
+        .tutor-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+        }
+        
+        .tutor-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .tutor-info p {
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .tutor-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-active {
+            background: var(--success);
+            color: white;
+        }
+        
+        .status-inactive {
+            background: var(--danger);
+            color: white;
+        }
         
         .notification {
             position: fixed;
@@ -412,7 +479,6 @@
             opacity: 0;
             transition: opacity 0.5s;
         }
-        /* Debug Panel */
         
         .debug-panel {
             background: var(--card-bg);
@@ -462,7 +528,6 @@
             background: var(--primary);
             color: white;
         }
-        /* Animations */
         
         @keyframes slideInRight {
             from {
@@ -483,7 +548,6 @@
                 transform: translateY(0);
             }
         }
-        /* Responsive Design */
         
         @media (max-width: 992px) {
             .admin-container {
@@ -518,58 +582,59 @@
             .dashboard-card {
                 padding: 25px;
             }
+            .tutor-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .tutor-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="admin-container">
-        <!-- Admin Sidebar -->
         <div class="admin-sidebar">
             <div class="admin-logo">
                 <i class="fas fa-graduation-cap"></i>
-                <h1>TutorConnect</h1>
+                <h1>TutorConnect Admin</h1>
             </div>
 
             <div class="admin-nav">
-                <a href="#" class="active">
+                <a href="#" class="active" data-section="dashboard">
                     <i class="fas fa-tachometer-alt"></i> Dashboard
                 </a>
-                <a href="#">
-                    <i class="fas fa-video"></i> Live Classes
-                </a>
-                <!-- <a href="#">
+                <a href="#" data-section="tutors">
                     <i class="fas fa-chalkboard-teacher"></i> Tutor Management
                 </a>
-                <a href="#">
-                    <i class="fas fa-calendar-check"></i> Bookings
+                <a href="#" data-section="video">
+                    <i class="fas fa-video"></i> Live Class Video
                 </a>
-                <a href="#">
-                    <i class="fas fa-users"></i> Students
+                <a href="#" data-section="stats">
+                    <i class="fas fa-chart-line"></i> Statistics
                 </a>
-                <a href="#">
-                    <i class="fas fa-cog"></i> Settings
-                </a> -->
             </div>
 
             <div class="admin-stats">
-                <h3><i class="fas fa-chart-line"></i> System Stats</h3>
+                <h3><i class="fas fa-chart-line"></i> Quick Stats</h3>
                 <div class="stat-item">
                     <span>Active Tutors</span>
-                    <strong>3</strong>
+                    <strong id="activeTutorsCount">0</strong>
                 </div>
                 <div class="stat-item">
-                    <span>Live Sessions</span>
-                    <strong>2</strong>
+                    <span>Live Viewers</span>
+                    <strong id="liveViewersCount">0</strong>
                 </div>
-                <!-- <div class="stat-item">
-                    <span>New Bookings</span>
-                    <strong>27</strong>
-                </div> -->
+                <div class="stat-item">
+                    <span>Total Tutors</span>
+                    <strong id="totalTutorsCount">0</strong>
+                </div>
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="admin-main">
             <div class="admin-header">
                 <h2>Admin Dashboard</h2>
@@ -584,97 +649,189 @@
                 </div>
             </div>
 
-            <!-- Dashboard Stats -->
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-users"></i>
+            <div id="dashboardSection" class="section-content">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <i class="fas fa-ellipsis-h"></i>
                         </div>
-                        <i class="fas fa-ellipsis-h"></i>
+                        <div class="card-value" id="cardTutors">0</div>
+                        <div class="card-title">Active Tutors</div>
                     </div>
-                    <div class="card-value">12</div>
-                    <div class="card-title">Total Students</div>
-                </div>
 
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-chalkboard-teacher"></i>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <i class="fas fa-ellipsis-h"></i>
                         </div>
-                        <i class="fas fa-ellipsis-h"></i>
+                        <div class="card-value" id="cardViewers">0</div>
+                        <div class="card-title">Live Viewers</div>
                     </div>
-                    <div class="card-value">4</div>
-                    <div class="card-title">Active Tutors</div>
-                </div>
 
-                <!-- <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-book"></i>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <i class="fas fa-ellipsis-h"></i>
                         </div>
-                        <i class="fas fa-ellipsis-h"></i>
+                        <div class="card-value">0</div>
+                        <div class="card-title">Bookings Today</div>
                     </div>
-                    <div class="card-value">324</div>
-                    <div class="card-title">Sessions Today</div>
-                </div>
 
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-dollar-sign"></i>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <i class="fas fa-ellipsis-h"></i>
                         </div>
-                        <i class="fas fa-ellipsis-h"></i>
+                        <div class="card-value">4.8</div>
+                        <div class="card-title">Avg. Rating</div>
                     </div>
-                    <div class="card-value">$8,420</div>
-                    <div class="card-title">Revenue (7 days)</div>
-                </div> -->
+                </div>
             </div>
 
-            <!-- Video Update Form -->
-            <div class="form-section">
-                <h3 class="section-title">Live Class Management</h3>
-
-                <form id="videoForm">
-                    <div class="form-group">
-                        <label for="youtubeLink">YouTube Video ID</label>
-                        <input type="text" id="youtubeLink" class="form-control" required placeholder="e.g., dQw4w9WgXcQ">
-                        <small>From URL: youtube.com/watch?v=<strong>VIDEO_ID</strong></small>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-sync-alt"></i> Update Live Class
-                    </button>
-                </form>
-            </div>
-
-            <!-- Debug Panel -->
-            <div class="debug-panel">
-                <h3><i class="fas fa-bug"></i> System Status</h3>
-
-                <div class="connection-status">
-                    <div class="status-indicator"></div>
-                    <span id="connectionStatus">Realtime connection active</span>
-                    <span id="networkLatency">24ms</span>
+            <div id="tutorsSection" class="section-content" style="display: none;">
+                <div class="form-section">
+                    <h3 class="section-title">Add/Edit Tutor</h3>
+                    <form id="tutorForm">
+                        <input type="hidden" id="tutorId">
+                        <div class="form-group">
+                            <label for="tutorName">Full Name *</label>
+                            <input type="text" id="tutorName" class="form-control" required placeholder="Enter tutor's full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorSubject">Subject *</label>
+                            <input type="text" id="tutorSubject" class="form-control" required placeholder="e.g., Mathematics, Science">
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorRating">Rating (1-5) *</label>
+                            <input type="number" id="tutorRating" class="form-control" min="1" max="5" step="0.1" required placeholder="4.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorExperience">Experience</label>
+                            <input type="text" id="tutorExperience" class="form-control" placeholder="e.g., 5 years experience">
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorDescription">Description *</label>
+                            <textarea id="tutorDescription" class="form-control" required placeholder="Enter tutor description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorStatus">Status *</label>
+                            <select id="tutorStatus" class="form-control" required>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorAvailable">Availability *</label>
+                            <select id="tutorAvailable" class="form-control" required>
+                                <option value="true">Available</option>
+                                <option value="false">Busy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" id="saveTutorBtn">
+                                <i class="fas fa-save"></i> Save Tutor
+                            </button>
+                            <button type="button" class="btn btn-outline" id="cancelEditBtn" style="display: none;">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
-                <p>Last update: <span id="lastUpdateTime">Today, 14:32</span></p>
+                <div class="form-section">
+                    <h3 class="section-title">Manage Tutors</h3>
+                    <div id="tutorsList" class="tutor-list">
+                    </div>
+                </div>
+            </div>
 
-                <button id="forceRefresh" class="btn btn-outline">
-                    <i class="fas fa-bolt"></i> Force Network Refresh
-                </button>
+            <div id="videoSection" class="section-content" style="display: none;">
+                <div class="form-section">
+                    <h3 class="section-title">Live Class Video Management</h3>
+                    <form id="videoForm">
+                        <div class="form-group">
+                            <label for="youtubeLink">YouTube Video ID *</label>
+                            <input type="text" id="youtubeLink" class="form-control" required placeholder="e.g., lIjEsfAxzGE">
+                            <small style="color: var(--gray); margin-top: 5px; display: block;">
+                                From URL: youtube.com/watch?v=<strong>VIDEO_ID</strong>
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sync-alt"></i> Update Live Class Video
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="form-group" style="margin-top: 30px;">
+                        <h4 style="margin-bottom: 15px;">Current Live Viewers</h4>
+                        <div class="dashboard-card">
+                            <div class="card-value" id="currentViewers">0</div>
+                            <div class="card-title">People watching now</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="statsSection" class="section-content" style="display: none;">
+                <div class="form-section">
+                    <h3 class="section-title">System Statistics</h3>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                            </div>
+                            <div class="card-value" id="statStudents">0</div>
+                            <div class="card-title">Total Students</div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                            </div>
+                            <div class="card-value" id="statTutors">0</div>
+                            <div class="card-title">Total Tutors</div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                            </div>
+                            <div class="card-value" id="statBookings">0</div>
+                            <div class="card-title">Total Bookings</div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                            </div>
+                            <div class="card-value" id="statSessions">0</div>
+                            <div class="card-title">Live Sessions</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyBlKnj9YWGheKPeA8MSUQxJWC-8xRVxTwo",
             authDomain: "netcentric-94476.firebaseapp.com",
@@ -684,22 +841,30 @@
             appId: "1:203392644028:web:d028c79992b55e0ba631b9"
         };
 
-        // Initialize Firebase
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
-        const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // DOM References
         const themeToggle = document.getElementById('themeToggle');
         const videoForm = document.getElementById('videoForm');
-        const forceRefresh = document.getElementById('forceRefresh');
+        const tutorForm = document.getElementById('tutorForm');
+        const tutorsList = document.getElementById('tutorsList');
+        const saveTutorBtn = document.getElementById('saveTutorBtn');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const navLinks = document.querySelectorAll('.admin-nav a');
+        const sectionContents = document.querySelectorAll('.section-content');
 
-        // Dark mode toggle
+        const activeTutorsCount = document.getElementById('activeTutorsCount');
+        const liveViewersCount = document.getElementById('liveViewersCount');
+        const totalTutorsCount = document.getElementById('totalTutorsCount');
+        const cardTutors = document.getElementById('cardTutors');
+        const cardViewers = document.getElementById('cardViewers');
+        const currentViewers = document.getElementById('currentViewers');
+
+        let editingTutorId = null;
+
         const themeIcon = themeToggle.querySelector('i');
-
-        // Check for saved theme preference
         if (localStorage.getItem('darkMode') === 'enabled') {
             document.body.classList.add('dark-mode');
             themeIcon.classList.remove('fa-moon');
@@ -708,7 +873,6 @@
 
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
-
             if (document.body.classList.contains('dark-mode')) {
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
@@ -720,12 +884,19 @@
             }
         });
 
-        // Validate YouTube ID format
-        function isValidYouTubeId(id) {
-            return /^[a-zA-Z0-9_-]{11}$/.test(id);
-        }
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = link.getAttribute('data-section');
 
-        // Show notification
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                sectionContents.forEach(content => content.style.display = 'none');
+                document.getElementById(`${section}Section`).style.display = 'block';
+            });
+        });
+
         function showNotification(message, type) {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
@@ -741,7 +912,10 @@
             }, 3000);
         }
 
-        // Video update handler
+        function isValidYouTubeId(id) {
+            return /^[a-zA-Z0-9_-]{11}$/.test(id);
+        }
+
         videoForm.addEventListener('submit', async(e) => {
             e.preventDefault();
             const videoId = document.getElementById('youtubeLink').value.trim();
@@ -769,10 +943,6 @@
                 });
 
                 showNotification('✅ Live class video updated successfully!', 'success');
-                console.log("Video updated to:", videoId);
-
-                // Update last update time
-                document.getElementById('lastUpdateTime').textContent = new Date().toLocaleTimeString();
             } catch (error) {
                 console.error("Update error:", error);
                 showNotification(`❌ Failed to update: ${error.message}`, 'error');
@@ -782,31 +952,217 @@
             }
         });
 
-        // Force network refresh
-        forceRefresh.addEventListener('click', async() => {
-            const originalText = forceRefresh.innerHTML;
+        function loadTutors() {
+            db.collection("tutors").onSnapshot((querySnapshot) => {
+                        tutorsList.innerHTML = '';
+                        let activeCount = 0;
+                        let totalCount = 0;
+
+                        if (querySnapshot.empty) {
+                            tutorsList.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: var(--gray);">
+                            <i class="fas fa-users-slash" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                            <h3>No tutors found</h3>
+                            <p>Add your first tutor using the form above.</p>
+                        </div>
+                    `;
+                        }
+
+                        querySnapshot.forEach((doc) => {
+                                    const tutor = doc.data();
+                                    const tutorId = doc.id;
+                                    totalCount++;
+                                    if (tutor.status === 'active') activeCount++;
+
+                                    const tutorItem = document.createElement('div');
+                                    tutorItem.className = 'tutor-item';
+                                    tutorItem.innerHTML = `
+                        <div class="tutor-info">
+                            <h4>${tutor.name || 'No Name'} 
+                                <span class="status-badge ${tutor.status === 'active' ? 'status-active' : 'status-inactive'}">
+                                    ${tutor.status || 'inactive'}
+                                </span>
+                                <span class="status-badge ${tutor.available ? 'status-active' : 'status-inactive'}">
+                                    ${tutor.available ? 'Available' : 'Busy'}
+                                </span>
+                            </h4>
+                            <p><strong>Subject:</strong> ${tutor.subject || 'No Subject'}</p>
+                            <p><strong>Rating:</strong> ${tutor.rating || 0} ⭐</p>
+                            ${tutor.experience ? `<p><strong>Experience:</strong> ${tutor.experience}</p>` : ''}
+                            <p>${tutor.description || ''}</p>
+                        </div>
+                        <div class="tutor-actions">
+                            <button class="btn btn-primary edit-tutor-btn" data-id="${tutorId}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger delete-tutor-btn" data-id="${tutorId}">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    `;
+                    tutorsList.appendChild(tutorItem);
+                });
+
+                activeTutorsCount.textContent = activeCount;
+                totalTutorsCount.textContent = totalCount;
+                cardTutors.textContent = activeCount;
+                
+                document.querySelectorAll('.edit-tutor-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const tutorId = e.target.closest('.edit-tutor-btn').getAttribute('data-id');
+                        editTutor(tutorId);
+                    });
+                });
+
+                document.querySelectorAll('.delete-tutor-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const tutorId = e.target.closest('.delete-tutor-btn').getAttribute('data-id');
+                        deleteTutor(tutorId);
+                    });
+                });
+            });
+        }
+
+        async function editTutor(tutorId) {
+            try {
+                const doc = await db.collection("tutors").doc(tutorId).get();
+                if (doc.exists) {
+                    const tutor = doc.data();
+                    document.getElementById('tutorId').value = tutorId;
+                    document.getElementById('tutorName').value = tutor.name || '';
+                    document.getElementById('tutorSubject').value = tutor.subject || '';
+                    document.getElementById('tutorRating').value = tutor.rating || 0;
+                    document.getElementById('tutorExperience').value = tutor.experience || '';
+                    document.getElementById('tutorDescription').value = tutor.description || '';
+                    document.getElementById('tutorStatus').value = tutor.status || 'active';
+                    document.getElementById('tutorAvailable').value = tutor.available ? 'true' : 'false';
+                    
+                    editingTutorId = tutorId;
+                    saveTutorBtn.innerHTML = '<i class="fas fa-save"></i> Update Tutor';
+                    cancelEditBtn.style.display = 'inline-flex';
+                    
+                    document.getElementById('tutorForm').scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (error) {
+                console.error("Error loading tutor:", error);
+                showNotification('❌ Error loading tutor details', 'error');
+            }
+        }
+
+        async function deleteTutor(tutorId) {
+            if (!confirm('Are you sure you want to delete this tutor?')) return;
 
             try {
-                forceRefresh.disabled = true;
-                forceRefresh.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
-
-                // Simulate network refresh
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
-                showNotification('✅ Network connection refreshed successfully', 'success');
+                await db.collection("tutors").doc(tutorId).delete();
+                showNotification('✅ Tutor deleted successfully', 'success');
+                
+                if (editingTutorId === tutorId) {
+                    resetTutorForm();
+                }
             } catch (error) {
-                showNotification('❌ Network refresh failed', 'error');
+                console.error("Error deleting tutor:", error);
+                showNotification('❌ Error deleting tutor', 'error');
+            }
+        }
+
+        function resetTutorForm() {
+            tutorForm.reset();
+            document.getElementById('tutorId').value = '';
+            editingTutorId = null;
+            saveTutorBtn.innerHTML = '<i class="fas fa-save"></i> Save Tutor';
+            cancelEditBtn.style.display = 'none';
+        }
+
+        tutorForm.addEventListener('submit', async(e) => {
+            e.preventDefault();
+
+            const tutorData = {
+                name: document.getElementById('tutorName').value.trim(),
+                subject: document.getElementById('tutorSubject').value.trim(),
+                rating: parseFloat(document.getElementById('tutorRating').value) || 0,
+                experience: document.getElementById('tutorExperience').value.trim(),
+                description: document.getElementById('tutorDescription').value.trim(),
+                status: document.getElementById('tutorStatus').value,
+                available: document.getElementById('tutorAvailable').value === 'true',
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (!editingTutorId) {
+                tutorData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+            }
+
+            const submitBtn = document.getElementById('saveTutorBtn');
+            const originalText = submitBtn.innerHTML;
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+                if (editingTutorId) {
+                    await db.collection("tutors").doc(editingTutorId).update(tutorData);
+                    showNotification('✅ Tutor updated successfully!', 'success');
+                } else {
+                    await db.collection("tutors").add(tutorData);
+                    showNotification('✅ Tutor added successfully!', 'success');
+                }
+
+                resetTutorForm();
+            } catch (error) {
+                console.error("Save error:", error);
+                showNotification(`❌ Failed to save tutor: ${error.message}`, 'error');
             } finally {
-                forceRefresh.disabled = false;
-                forceRefresh.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
             }
         });
 
-        // Initialize animations
-        document.querySelectorAll('.dashboard-card').forEach((card, index) => {
-            card.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
-            card.style.opacity = 0;
-        });
+        cancelEditBtn.addEventListener('click', resetTutorForm);
+
+        async function loadCurrentVideo() {
+            try {
+                const doc = await db.collection("config").doc("liveClass").get();
+                if (doc.exists) {
+                    document.getElementById('youtubeLink').value = doc.data().videoId || '';
+                }
+            } catch (error) {
+                console.error("Error loading video:", error);
+            }
+        }
+
+        function monitorLiveViewers() {
+            db.collection("viewers").onSnapshot((querySnapshot) => {
+                const now = Date.now();
+                let activeViewers = 0;
+                
+                querySnapshot.forEach((doc) => {
+                    const viewer = doc.data();
+                    if (viewer.lastSeen && now - viewer.lastSeen.toMillis() < 30000) {
+                        activeViewers++;
+                    }
+                });
+                
+                liveViewersCount.textContent = activeViewers;
+                cardViewers.textContent = activeViewers;
+                currentViewers.textContent = activeViewers;
+            });
+        }
+
+        async function init() {
+            try {
+                loadTutors();
+                loadCurrentVideo();
+                monitorLiveViewers();
+                
+                document.querySelectorAll('.dashboard-card').forEach((card, index) => {
+                    card.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
+                    card.style.opacity = 0;
+                });
+            } catch (error) {
+                console.error("Initialization error:", error);
+            }
+        }
+
+        init();
     </script>
 </body>
 
